@@ -29,6 +29,18 @@ class Firestore {
 
   Firestore._(this._instanceResources);
 
+  /// Gets a [CollectionReference] instance that refers to the collection at the
+  /// specified path.
+  ///
+  /// [collectionPath] is a slash-separated path to a collection.
+  ///
+  /// ```dart
+  /// final collectionRef = firestore.collection('collection');
+  ///
+  /// // Add a document with an auto-generated ID.
+  /// final documentRef = await collectionRef.add({'foo': 'bar'});
+  /// print('Added document at ${documentRef.path}');
+  /// ```
   CollectionReference collection(String collectionPath) {
     assert(collectionPath != null, "a collection path cannot be null");
     assert(collectionPath.isNotEmpty,
