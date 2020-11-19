@@ -55,6 +55,15 @@ class Firestore {
     );
   }
 
+  /// Gets a [DocumentReference] instance that refers to the document at the
+  /// specified path.
+  ///
+  /// [documentPath] is a slash-separated path to a document.
+  ///
+  /// ```dart
+  /// final documentRef = firestore.doc('collection/document');
+  /// print('Path of document is ${documentRef.path}');
+  /// ```
   DocumentReference doc(String documentPath) {
     assert(documentPath != null, "a document path cannot be null");
     assert(
