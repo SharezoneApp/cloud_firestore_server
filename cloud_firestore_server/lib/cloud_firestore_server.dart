@@ -5,6 +5,7 @@ import 'src/internal/instance_resources.dart';
 import 'src/internal/path_string_validation.dart';
 
 export 'src/collection_reference.dart';
+export 'src/credentials/credentials.dart';
 export 'src/document_reference.dart';
 export 'src/document_snapshot.dart';
 export 'src/query_document_snapshot.dart';

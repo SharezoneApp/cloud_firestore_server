@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:meta/meta.dart';
 
-void throwIfNullOrEmpty(String value, String name) {
+void _throwIfNullOrEmpty(String value, String name) {
   if (value == null) {
     throw ArgumentError.notNull(name);
   }
@@ -32,10 +32,10 @@ class ServiceAccountCredentials {
     @required this.privateKey,
     @required this.projectId,
   }) {
-    throwIfNullOrEmpty(email, 'email');
-    throwIfNullOrEmpty(clientId, 'clientId');
-    throwIfNullOrEmpty(privateKey, 'privateKey');
-    throwIfNullOrEmpty(projectId, 'projectId');
+    _throwIfNullOrEmpty(email, 'email');
+    _throwIfNullOrEmpty(clientId, 'clientId');
+    _throwIfNullOrEmpty(privateKey, 'privateKey');
+    _throwIfNullOrEmpty(projectId, 'projectId');
   }
 
   factory ServiceAccountCredentials.fromPath(String path) {
@@ -75,26 +75,5 @@ class ServiceAccountCredentials {
   factory ServiceAccountCredentials.applicationDefault() {
     final pathToDefaultCredentials = Platform.environment[credentialsVarName];
     return ServiceAccountCredentials.fromPath(pathToDefaultCredentials);
-  }
-}
-
-/// Represents the client application's credentials.
-class ClientId {
-  /// The identifier used to identify this application to the server.
-  final String identifier;
-
-  /// The client secret used to identify this application to the server.
-  final String secret;
-
-  ClientId(this.identifier, this.secret) {
-    if (identifier == null) {
-      throw ArgumentError('Argument identifier may not be null.');
-    }
-  }
-
-  ClientId.serviceAccount(this.identifier) : secret = null {
-    if (identifier == null) {
-      throw ArgumentError('Argument identifier may not be null.');
-    }
   }
 }
