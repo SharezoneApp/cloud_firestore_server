@@ -4,16 +4,22 @@ import 'src/credentials/credentials.dart';
 import 'src/document_reference.dart';
 import 'src/internal/instance_resources.dart';
 import 'src/internal/path_string_validation.dart';
+import 'src/write_batch.dart';
 
 export 'src/collection_group.dart';
 export 'src/collection_reference.dart';
 export 'src/credentials/credentials.dart';
 export 'src/document_reference.dart';
 export 'src/document_snapshot.dart';
+export 'src/field_path.dart';
+export 'src/precondition.dart';
 export 'src/query_document_snapshot.dart';
 export 'src/query_partition.dart';
 export 'src/query_snapshot.dart';
-export 'src/write_result.dart';
+export 'src/set_options.dart';
+export 'src/timestamp.dart';
+export 'src/write_batch.dart';
+export 'src/write_batch.dart';
 
 class Firestore {
   final InstanceResources _instanceResources;
@@ -105,6 +111,25 @@ class Firestore {
   /// ```
   @Deprecated('Unimplemented')
   CollectionGroup collectionGroup(String collectionId) {
+    throw UnimplementedError();
+  }
+
+  /// Creates a [WriteBatch], used for performing multiple writes as a single
+  /// atomic operation.
+  ///
+  /// ```dart
+  /// final writeBatch = firestore.batch();
+  ///
+  /// // Add two documents in an atomic batch.
+  /// final data = { 'foo': 'bar' };
+  /// writeBatch.set(firestore.doc('col/doc1'), data);
+  /// writeBatch.set(firestore.doc('col/doc2'), data);
+  ///
+  /// await writeBatch.commit();
+  /// print('Successfully executed batch.');
+  /// ```
+  @Deprecated('Unimplemented')
+  WriteBatch batch() {
     throw UnimplementedError();
   }
 }

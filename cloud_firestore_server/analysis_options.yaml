@@ -7,7 +7,7 @@ include: package:lint/analysis_options_package.yaml
 #     - camel_case_types
 
 analyzer:
-  erros:
-    missing_returns: true
+  errors:
+    missing_return: error
 #   exclude:
 #     - path/to/excluded/files/**

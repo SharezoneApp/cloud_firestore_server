@@ -5,7 +5,6 @@ import 'collection_reference.dart';
 import 'document_snapshot.dart';
 import 'firestore_api/document_id_extension.dart';
 import 'internal/internal.dart';
-import 'write_result.dart';
 
 class DocumentReference {
   final String path;
@@ -29,15 +28,13 @@ class DocumentReference {
 
   /// Writes to the document referred to by this `DocumentReference`. If the
   /// document does not yet exist, it will be created.
-  /// Returns [WriteResult].
-  Future<WriteResult> set(Map<String, dynamic> data) async {
+  Future<void> set(Map<String, dynamic> data) async {
     final document = api.Document();
     document.fields = data.toFirestoreMap();
 
     /// Hat das wirklich die selbe Semantik wie doc.set() bei fstore admin?
     await _instanceResources.firestoreApi
         .patch(document, '${_instanceResources.databasePath}/documents/$path');
-    return WriteResult();
   }
 
   Future<DocumentSnapshot> get() async {

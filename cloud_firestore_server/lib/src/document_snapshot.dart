@@ -8,11 +8,17 @@ class DocumentSnapshot {
   final String id;
 
   /// Returns the [DocumentReference] of this snapshot.
-  DocumentReference get reference {}
+  @Deprecated('Unimplemented')
+  DocumentReference get reference {
+    throw UnimplementedError();
+  }
 
   /// Metadata about this [DocumentSnapshot] concerning its source and if it has local
   /// modifications.
-  SnapshotMetadata get metadata {}
+  @Deprecated('Unimplemented')
+  SnapshotMetadata get metadata {
+    throw UnimplementedError();
+  }
 
   /// Returns `true` if the [DocumentSnapshot] exists.
   final bool exists;
