@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'query.dart';
 
 /// A split point that can be used in a query as a starting and/or end point for

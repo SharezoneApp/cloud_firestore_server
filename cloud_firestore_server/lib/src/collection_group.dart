@@ -22,7 +22,7 @@ class CollectionGroup extends Query {
   /// await for (final partition of query.getPartitions(42)) {
   ///   final partitionedQuery = partition.toQuery();
   ///   final querySnapshot = await partitionedQuery.get();
-  ///   print(`Partition contained ${querySnapshot.length} documents`);
+  ///   print('Partition contained ${querySnapshot.length} documents');
   /// }
   /// ```
   ///
