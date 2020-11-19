@@ -1,5 +1,6 @@
 import 'package:googleapis/firestore/v1.dart' as api;
 import 'package:meta/meta.dart';
+import 'package:quiver/core.dart';
 
 import 'collection_reference.dart';
 import 'document_snapshot.dart';
@@ -50,4 +51,16 @@ class DocumentReference {
     }
     return DocumentSnapshot(doc.id, doc.fields.toPrimitives(), exists: true);
   }
+
+  @override
+  bool operator ==(dynamic o) =>
+      o is DocumentReference &&
+      o._instanceResources.projectId == o._instanceResources.projectId &&
+      o.path == path;
+
+  @override
+  int get hashCode => hash2(_instanceResources.projectId, path);
+
+  @override
+  String toString() => '$DocumentReference($path)';
 }
