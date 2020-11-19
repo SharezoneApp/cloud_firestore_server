@@ -11,19 +11,19 @@ export 'src/query_document_snapshot.dart';
 export 'src/query_snapshot.dart';
 export 'src/write_result.dart';
 
-class Firstore {
+class Firestore {
   final InstanceResources _instanceResources;
 
-  static Future<Firstore> newInstance(
+  static Future<Firestore> newInstance(
       {ServiceAccountCredentials credentials}) async {
     /// Haven't tested [ServiceAccountCredentials.applicationDefault] yet.
     final _credentials =
         credentials ?? ServiceAccountCredentials.applicationDefault();
 
-    return Firstore(await createInstanceResources(_credentials));
+    return Firestore(await createInstanceResources(_credentials));
   }
 
-  Firstore(this._instanceResources);
+  Firestore(this._instanceResources);
 
   CollectionReference collection(String collectionPath) {
     assert(collectionPath != null, "a collection path cannot be null");
