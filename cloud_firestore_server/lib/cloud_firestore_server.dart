@@ -1,9 +1,11 @@
+import 'src/bulk_writer.dart';
 import 'src/collection_group.dart';
 import 'src/collection_reference.dart';
 import 'src/credentials/credentials.dart';
 import 'src/document_reference.dart';
 import 'src/internal/instance_resources.dart';
 import 'src/internal/path_string_validation.dart';
+import 'src/transaction.dart';
 import 'src/write_batch.dart';
 
 export 'src/collection_group.dart';
@@ -162,6 +164,54 @@ class Firestore {
   /// await bulkWriter.close().then(() => {
   ///   console.log('Executed all writes');
   /// });
-  // Sollten die Options nicht vielleicht einfach named sein?
-  // BulkWriter bulkWriter(BulkWriterOptions options) {}
+  @Deprecated('Unimplemented')
+  BulkWriter bulkWriter(BulkWriterOptions options) {
+    throw UnimplementedError();
+  }
+
+  /// Executes the given [updateFunction] and commits the changes applied within
+  /// the transaction.
+  ///
+  /// You can use the [Transaction] passed to [updateFunction] to read and
+  /// modify Firestore documents under lock. Transactions are committed once
+  /// [updateFunction] resolves and attempted up to five times on failure by
+  /// default.
+  /// The number of retries can be customized via [maxAttempts].
+  ///
+  /// As the [updateFunction] can be executed multiple times for a single
+  /// transaction it should handle multiple executions.
+  ///
+  /// If the transaction completes successfully the value returned by
+  /// [updateFunction] will be returned by this function.
+  /// If the transaction fails the Future will complete with an Exception
+  /// describing the failure.
+  /// If [updateFunction] throws then the transaction will be aborted an this
+  /// function will return the error.
+  ///
+  /// ```dart
+  /// final updatedCount = await firestore.runTransaction<int>((transaction) async {
+  ///  final documentRef = firestore.doc('col/doc');
+  ///  final document = await transaction.get(documentRef);
+  ///  if (!document.exists) {
+  ///    transaction.set(documentRef, {'count': 1});
+  ///    return 1;
+  ///  }
+  ///  final count = document.get('count') ?? 0;
+  ///  if (count > 10) {
+  ///    throw Exception('Reached maximum count');
+  ///  }
+  ///  final updatedCount = count + 1;
+  ///  transaction.update(documentRef, {'count': updatedCount});
+  ///  return updatedCount;
+  /// );
+  ///
+  /// print('Count updated to $updatedCount');
+  /// ```
+  @Deprecated('Unimplemented')
+  Future<T> runTransaction<T>(
+    Future<T> Function(Transaction transaction) updateFunction, {
+    int maxAttempts,
+  }) {
+    throw UnimplementedError();
+  }
 }
