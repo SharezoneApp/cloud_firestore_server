@@ -1,0 +1,13 @@
+include: package:lint/analysis_options_package.yaml
+
+# For lint rules and documentation, see http://dart-lang.github.io/linter/lints.
+# Uncomment to specify additional rules.
+# linter:
+#   rules:
+#     - camel_case_types
+
+analyzer:
+  erros:
+    missing_returns: true
+#   exclude:
+#     - path/to/excluded/files/**
