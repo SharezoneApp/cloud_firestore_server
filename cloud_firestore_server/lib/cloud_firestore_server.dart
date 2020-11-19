@@ -1,14 +1,17 @@
+import 'src/collection_group.dart';
 import 'src/collection_reference.dart';
 import 'src/credentials/credentials.dart';
 import 'src/document_reference.dart';
 import 'src/internal/instance_resources.dart';
 import 'src/internal/path_string_validation.dart';
 
+export 'src/collection_group.dart';
 export 'src/collection_reference.dart';
 export 'src/credentials/credentials.dart';
 export 'src/document_reference.dart';
 export 'src/document_snapshot.dart';
 export 'src/query_document_snapshot.dart';
+export 'src/query_partition.dart';
 export 'src/query_snapshot.dart';
 export 'src/write_result.dart';
 
@@ -49,5 +52,30 @@ class Firestore {
     assert(
         documentPath != '/', "a document path must point to a valid document");
     return DocumentReference(_instanceResources, path: documentPath);
+  }
+
+  /// Creates and returns a new Query that includes all documents in the
+  /// database that are contained in a collection or subcollection with the
+  /// given collectionId.
+  ///
+  /// [collectionId] Identifies the collections to query over.
+  /// Every collection or subcollection with this ID as the last segment of its
+  /// path will be included. Cannot contain a slash.
+  ///
+  /// dart```
+  /// final docA = firestore.doc('mygroup/docA').set({'foo': 'bar'});
+  /// final docB = firestore.doc('abc/def/mygroup/docB').set({'foo': 'bar'});
+  ///
+  /// await Future.wait([docA, docB]).then((_) {
+  ///   final query = firestore
+  ///       .collectionGroup('mygroup')
+  ///       .where('foo', isEqualTo: 'bar')
+  ///       .get()
+  ///       .then((snapshot) => print('Found ${snapshot.size} documents.'));
+  /// });
+  /// ```
+  @Deprecated('Unimplemented')
+  CollectionGroup collectionGroup(String collectionId) {
+    throw UnimplementedError();
   }
 }
