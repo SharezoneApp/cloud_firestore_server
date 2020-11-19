@@ -21,10 +21,10 @@ class Firestore {
     final _credentials =
         credentials ?? ServiceAccountCredentials.applicationDefault();
 
-    return Firestore(await createInstanceResources(_credentials));
+    return Firestore._(await createInstanceResources(_credentials));
   }
 
-  Firestore(this._instanceResources);
+  Firestore._(this._instanceResources);
 
   CollectionReference collection(String collectionPath) {
     assert(collectionPath != null, "a collection path cannot be null");
