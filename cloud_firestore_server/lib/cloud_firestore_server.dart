@@ -132,4 +132,36 @@ class Firestore {
   WriteBatch batch() {
     throw UnimplementedError();
   }
+
+  /// Creates a [BulkWriter], used for performing multiple writes in parallel.
+  /// Gradually ramps up writes as specified by the 500/50/5 rule.
+  ///
+  /// [500/50/5 Documentation](https://cloud.google.com/datastore/docs/best-practices#ramping_up_traffic)
+  ///
+  /// @param {object=} options BulkWriter options.
+  /// @param {boolean=} options.disableThrottling Whether to disable throttling
+  /// as specified by the 500/50/5 rule.
+  /// @returns {WriteBatch} A BulkWriter that operates on this Firestore
+  /// client.
+  ///
+  /// @example
+  /// let bulkWriter = firestore.bulkWriter();
+  ///
+  /// bulkWriter.create(firestore.doc('col/doc1'), {foo: 'bar'})
+  ///   .then(res => {
+  ///     console.log(`Added document at ${res.writeTime}`);
+  ///   });
+  /// bulkWriter.update(firestore.doc('col/doc2'), {foo: 'bar'})
+  ///   .then(res => {
+  ///     console.log(`Updated document at ${res.writeTime}`);
+  ///   });
+  /// bulkWriter.delete(firestore.doc('col/doc3'))
+  ///   .then(res => {
+  ///     console.log(`Deleted document at ${res.writeTime}`);
+  ///   });
+  /// await bulkWriter.close().then(() => {
+  ///   console.log('Executed all writes');
+  /// });
+  // Sollten die Options nicht vielleicht einfach named sein?
+  // BulkWriter bulkWriter(BulkWriterOptions options) {}
 }
