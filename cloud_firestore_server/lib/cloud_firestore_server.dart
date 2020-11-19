@@ -18,6 +18,14 @@ export 'src/write_result.dart';
 class Firestore {
   final InstanceResources _instanceResources;
 
+  /// The projectId for this Firestore Instance.
+  /// This is the same Id used for your Firebase/GCP project.
+  String get projectId => _instanceResources.projectId;
+
+  /// Returns the root path of your database.
+  /// Is usually "projects/[YOUR-PROJECT-ID]/databases/(default)"
+  String get formattedName => _instanceResources.databasePath;
+
   static Future<Firestore> newInstance(
       {ServiceAccountCredentials credentials}) async {
     /// Haven't tested [ServiceAccountCredentials.applicationDefault] yet.
