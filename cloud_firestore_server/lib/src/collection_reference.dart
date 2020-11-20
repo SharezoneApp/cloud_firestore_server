@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'document_reference.dart';
 import 'internal/instance_resources.dart';
 import 'internal/pointer.dart';

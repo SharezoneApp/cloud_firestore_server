@@ -1,5 +1,5 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart' as api;
-import 'package:meta/meta.dart';
 import 'package:quiver/core.dart';
 
 import 'collection_reference.dart';
@@ -14,7 +14,6 @@ class DocumentReference {
   DocumentReference(this._instanceResources, {required this.path});
 
   CollectionReference collection(String collectionPath) {
-    assert(collectionPath != null, "a collection path cannot be null");
     assert(collectionPath.isNotEmpty,
         "a collectionPath path must be a non-empty string");
     assert(!collectionPath.contains("//"),

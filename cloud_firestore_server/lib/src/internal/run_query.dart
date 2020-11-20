@@ -1,5 +1,6 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart';
-import 'package:meta/meta.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
 import 'firestore_run_query_fixed_extension.dart';
 import 'firestore_value_conversion.dart';

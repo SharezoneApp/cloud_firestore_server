@@ -6,8 +6,7 @@
 class Pointer {
   /// Create instance of [Pointer]
   Pointer(String path)
-      : assert(path != null),
-        components =
+      : components =
             path.split('/').where((element) => element.isNotEmpty).toList();
 
   /// The Firestore normalized path of the [Pointer].

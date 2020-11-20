@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'firestore_api/document_id_extension.dart';
 import 'internal/internal.dart';
 import 'query_document_snapshot.dart';

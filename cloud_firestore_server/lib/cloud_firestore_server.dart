@@ -63,7 +63,6 @@ class Firestore {
   /// print('Added document at ${documentRef.path}');
   /// ```
   CollectionReference collection(String collectionPath) {
-    assert(collectionPath != null, "a collection path cannot be null");
     assert(collectionPath.isNotEmpty,
         "a collectionPath path must be a non-empty string");
     assert(!collectionPath.contains("//"),
@@ -86,7 +85,6 @@ class Firestore {
   /// print('Path of document is ${documentRef.path}');
   /// ```
   DocumentReference doc(String documentPath) {
-    assert(documentPath != null, "a document path cannot be null");
     assert(
         documentPath.isNotEmpty, "a document path must be a non-empty string");
     assert(

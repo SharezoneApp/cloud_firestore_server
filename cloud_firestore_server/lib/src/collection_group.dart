@@ -1,5 +1,4 @@
 import 'package:cloud_firestore_server/src/internal/instance_resources.dart';
-import 'package:meta/meta.dart';
 
 import 'query.dart';
 import 'query_partition.dart';
