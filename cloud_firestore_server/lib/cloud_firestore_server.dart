@@ -1,3 +1,6 @@
+import 'package:cloud_firestore_server/src/document_snapshot.dart';
+import 'package:cloud_firestore_server/src/read_options.dart';
+
 import 'src/bulk_writer.dart';
 import 'src/collection_group.dart';
 import 'src/collection_reference.dart';
@@ -212,6 +215,46 @@ class Firestore {
     Future<T> Function(Transaction transaction) updateFunction, {
     int maxAttempts,
   }) {
+    throw UnimplementedError();
+  }
+
+  /// Fetches the root collections that are associated with this Firestore
+  /// database.
+  ///
+  /// ```dart
+  /// final collections = await firestore.listCollections();
+  /// for (final collection of collections) {
+  ///   print('Found collection with id: ${collection.id}');
+  /// }
+  /// ```
+  @Deprecated('Unimplemented')
+  Future<List<CollectionReference>> listCollections() {
+    throw UnimplementedError();
+  }
+
+  /// Retrieves multiple documents from Firestore.
+  ///
+  /// dart```
+  /// final docRef1 = firestore.doc('col/doc1');
+  /// final docRef2 = firestore.doc('col/doc2');
+  ///
+  /// final docs = await firestore.getAll([docRef1, docRef2], options: ReadOptions(fieldPath: 'user'));
+  /// print('First document: ${docs[0]}');
+  /// print('Second document: ${docs[1]}');
+  /// ```
+  @Deprecated('Unimplemented')
+  Future<List<DocumentSnapshot>> getAll(
+    List<DocumentReference> documentReferences, {
+    ReadOptions options,
+  }) {
+    throw UnimplementedError();
+  }
+
+  /// Terminates the Firestore client and closes all open streams.
+  ///
+  /// Completes the Future when the client is terminated.
+  @Deprecated('Unimplemented')
+  Future<void> terminate() {
     throw UnimplementedError();
   }
 }
