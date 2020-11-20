@@ -8,7 +8,7 @@ import 'query.dart';
 class CollectionReference extends Query {
   CollectionReference(
     InstanceResources instanceResources, {
-    @required String path,
+    required String path,
   }) : super(
           instanceResources,
           path: path,

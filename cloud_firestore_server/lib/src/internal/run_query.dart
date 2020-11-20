@@ -5,14 +5,14 @@ import 'firestore_run_query_fixed_extension.dart';
 import 'firestore_value_conversion.dart';
 
 Future<List<Document>> runQuery({
-  @required String fieldPath,
-  @required String operation,
-  @required dynamic value,
-  @required String collectionId,
-  @required String parentPath,
-  @required ProjectsDatabasesDocumentsResourceApi api,
-  @required http.Client client,
-  int /*?*/ limit,
+  required String fieldPath,
+  required String operation,
+  required dynamic value,
+  required String collectionId,
+  required String? parentPath,
+  required ProjectsDatabasesDocumentsResourceApi api,
+  required http.Client client,
+  int? limit,
 }) async {
   final chatFieldReference = FieldReference()..fieldPath = fieldPath;
   final fstoreValue = '$value'.toFirestoreValue();
@@ -35,11 +35,11 @@ Future<List<Document>> runQuery({
 }
 
 Future<List<Document>> runMultiConditionQuery({
-  @required List<Condition> conditions,
-  @required String collectionId,
-  @required String /*?*/ parentPath,
-  @required ProjectsDatabasesDocumentsResourceApi api,
-  @required http.Client client,
+  required List<Condition> conditions,
+  required String collectionId,
+  required String? parentPath,
+  required ProjectsDatabasesDocumentsResourceApi api,
+  required http.Client client,
 }) async {
   final filters = conditions.map((condition) {
     final chatFieldReference = FieldReference()
@@ -72,8 +72,8 @@ class Condition {
   final dynamic value;
 
   Condition({
-    @required this.fieldPath,
-    @required this.operation,
-    @required this.value,
+    required this.fieldPath,
+    required this.operation,
+    required this.value,
   });
 }

@@ -16,7 +16,7 @@ class DocumentSnapshot {
   ///   print('Data: ${documentSnapshot.data()}');
   /// }
   /// ```
-  final bool exists;
+  final bool? exists;
 
   /// Returns the [DocumentReference] of this snapshot.
   @Deprecated('Unimplemented')
@@ -38,23 +38,23 @@ class DocumentSnapshot {
     throw UnimplementedError();
   }
 
-  final Map<String, dynamic> _data;
+  final Map<String, dynamic>? _data;
 
   /// Contains all the data of this [DocumentSnapshot].
   Map<String, dynamic> data() =>
-      _data == null ? const {} : Map<String, dynamic>.from(_data);
+      _data == null ? const {} : Map<String, dynamic>.from(_data!);
 
   /// Gets a nested field by [String] or [FieldPath] from this [DocumentSnapshot].
   ///
   /// Data can be accessed by providing a dot-notated path or [FieldPath]
   /// which recursively finds the specified data. If no data could be found
   /// at the specified path, a [StateError] will be thrown.
-  Object get(Object field) => _data == null ? _data[field] : null;
+  Object? get(Object field) => _data == null ? _data![field as String] : null;
 
   /// Gets a nested field by [String] or [FieldPath] from this [DocumentSnapshot].
   ///
   /// Data can be accessed by providing a dot-notated path or [FieldPath]
   /// which recursively finds the specified data. If no data could be found
   /// at the specified path, a [StateError] will be thrown.
-  Object operator [](Object field) => get(field);
+  Object? operator [](Object field) => get(field);
 }

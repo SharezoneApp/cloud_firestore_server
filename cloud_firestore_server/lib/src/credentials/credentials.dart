@@ -13,21 +13,21 @@ class ServiceAccountCredentials {
   static const _credentialsVarName = 'GOOGLE_APPLICATION_CREDENTIALS';
 
   /// The email address of this service account.
-  final String/*!*/ email;
+  final String email;
 
   /// The clientId.
-  final String/*!*/ clientId;
+  final String clientId;
 
   /// Private key.
-  final String/*!*/ privateKey;
+  final String privateKey;
 
-  final String/*!*/ projectId;
+  final String projectId;
 
   ServiceAccountCredentials({
-    @required this.email,
-    @required this.clientId,
-    @required this.privateKey,
-    @required this.projectId,
+    required this.email,
+    required this.clientId,
+    required this.privateKey,
+    required this.projectId,
   }) {
     _throwIfEmpty(email, 'email');
     _throwIfEmpty(clientId, 'clientId');
@@ -53,7 +53,7 @@ class ServiceAccountCredentials {
     final clientId = jsonMap['client_id'] as String;
     final privateKey = jsonMap['private_key'] as String;
     final email = jsonMap['client_email'] as String;
-    final type = jsonMap['type'] as String/*!*/;
+    final type = jsonMap['type'] as String;
     final projectId = jsonMap['project_id'] as String;
 
     if (type != 'service_account') {
@@ -70,7 +70,7 @@ class ServiceAccountCredentials {
   }
 
   factory ServiceAccountCredentials.applicationDefault() {
-    final pathToDefaultCredentials = Platform.environment[_credentialsVarName];
+    final pathToDefaultCredentials = Platform.environment[_credentialsVarName]!;
     return ServiceAccountCredentials.fromPath(pathToDefaultCredentials);
   }
 }

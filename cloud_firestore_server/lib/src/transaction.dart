@@ -57,7 +57,7 @@ class Transaction {
   @Deprecated('Unimplemented')
   Future<List<DocumentSnapshot>> getAll(
     List<DocumentReference> documentReferences, {
-    ReadOptions options,
+    ReadOptions? options,
   }) {
     throw UnimplementedError();
   }
@@ -105,7 +105,7 @@ class Transaction {
   Transaction set(
     DocumentReference documentReference,
     Map<String, dynamic> data, {
-    SetOptions options,
+    SetOptions? options,
   }) {
     throw UnimplementedError();
   }
@@ -150,7 +150,7 @@ class Transaction {
   /// ```
   @Deprecated('Unimplemented')
   Transaction delete(DocumentReference documentReference,
-      {Precondition precondition}) {
+      {Precondition? precondition}) {
     throw UnimplementedError();
   }
 }

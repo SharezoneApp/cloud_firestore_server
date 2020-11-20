@@ -11,7 +11,7 @@ class DocumentReference {
   final String path;
   final InstanceResources _instanceResources;
 
-  DocumentReference(this._instanceResources, {@required this.path});
+  DocumentReference(this._instanceResources, {required this.path});
 
   CollectionReference collection(String collectionPath) {
     assert(collectionPath != null, "a collection path cannot be null");

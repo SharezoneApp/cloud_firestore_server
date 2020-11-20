@@ -40,7 +40,7 @@ class Firestore {
   String get formattedName => _instanceResources.databasePath;
 
   static Future<Firestore> newInstance(
-      {ServiceAccountCredentials credentials}) async {
+      {ServiceAccountCredentials? credentials}) async {
     /// Haven't tested [ServiceAccountCredentials.applicationDefault] yet.
     final _credentials =
         credentials ?? ServiceAccountCredentials.applicationDefault();
@@ -215,7 +215,7 @@ class Firestore {
   @Deprecated('Unimplemented')
   Future<T> runTransaction<T>(
     Future<T> Function(Transaction transaction) updateFunction, {
-    int maxAttempts,
+    int? maxAttempts,
   }) {
     throw UnimplementedError();
   }
@@ -247,7 +247,7 @@ class Firestore {
   @Deprecated('Unimplemented')
   Future<List<DocumentSnapshot>> getAll(
     List<DocumentReference> documentReferences, {
-    ReadOptions options,
+    ReadOptions? options,
   }) {
     throw UnimplementedError();
   }

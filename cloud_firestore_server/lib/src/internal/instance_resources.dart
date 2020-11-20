@@ -14,9 +14,9 @@ class InstanceResources {
   String get databasePath => 'projects/$projectId/databases/(default)';
 
   InstanceResources({
-    @required this.client,
-    @required this.firestoreApi,
-    @required this.projectId,
+    required this.client,
+    required this.firestoreApi,
+    required this.projectId,
   });
 }
 

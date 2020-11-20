@@ -32,7 +32,7 @@ extension FirestoreRunQueryFixedExtension
   /// If the used [http.Client] completes with an error when making a REST call,
   /// this method will complete with the same error.
   Future<List<Document>> runQueryFixed(RunQueryRequest request,
-      {@required http.Client client, @required String parent}) async {
+      {required http.Client client, required String? parent}) async {
     final urlParentAddition = parent != null ? '/$parent' : '';
     final url =
         'https://firestore.googleapis.com/v1/projects/sharezone-debug/databases/(default)/documents$urlParentAddition:runQuery';

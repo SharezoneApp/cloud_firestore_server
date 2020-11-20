@@ -8,14 +8,14 @@ class Query {
   final InstanceResources instanceResources;
 
   final String path;
-  final String fieldPath;
-  final String operation;
+  final String? fieldPath;
+  final String? operation;
   final dynamic value;
-  final int limitOfDocs;
+  final int? limitOfDocs;
 
   Query(
     this.instanceResources, {
-    @required this.path,
+    required this.path,
     this.operation,
     this.limitOfDocs,
     this.fieldPath,
@@ -24,8 +24,8 @@ class Query {
 
   Future<QuerySnapshot> get() async {
     final docs = await runQuery(
-      fieldPath: fieldPath,
-      operation: operation,
+      fieldPath: fieldPath!,
+      operation: operation!,
       value: value,
       collectionId: Pointer(path).components.last,
       parentPath: Pointer(path).parentPathOrNull(),
@@ -43,17 +43,17 @@ class Query {
   Query where(
     // TODO: Find out why this is not a string - because of FieldValues?
     Object field, {
-    Object isEqualTo,
-    Object isNotEqualTo,
-    Object isLessThan,
-    Object isLessThanOrEqualTo,
-    Object isGreaterThan,
-    Object isGreaterThanOrEqualTo,
-    Object arrayContains,
-    List<Object> arrayContainsAny,
-    List<Object> whereIn,
-    List<Object> whereNotIn,
-    bool isNull,
+    Object? isEqualTo,
+    Object? isNotEqualTo,
+    Object? isLessThan,
+    Object? isLessThanOrEqualTo,
+    Object? isGreaterThan,
+    Object? isGreaterThanOrEqualTo,
+    Object? arrayContains,
+    List<Object>? arrayContainsAny,
+    List<Object>? whereIn,
+    List<Object>? whereNotIn,
+    bool? isNull,
   }) {
     return _copyWith(
       fieldPath: field as String,
@@ -67,10 +67,10 @@ class Query {
   }
 
   Query _copyWith({
-    String fieldPath,
-    String operation,
-    Object value,
-    int limit,
+    String? fieldPath,
+    String? operation,
+    Object? value,
+    int? limit,
   }) {
     return Query(
       instanceResources,

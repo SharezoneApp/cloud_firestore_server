@@ -51,7 +51,7 @@ class WriteBatch {
   /// ```
   @Deprecated('Unimplemented')
   WriteBatch delete(DocumentReference documentRef,
-      {Precondition precondition}) {
+      {Precondition? precondition}) {
     throw UnimplementedError();
   }
 
@@ -82,7 +82,7 @@ class WriteBatch {
   /// ```
   @Deprecated('Unimplemented')
   WriteBatch set(DocumentReference documentRef, Map<String, dynamic> data,
-      {SetOptions options}) {
+      {SetOptions? options}) {
     throw UnimplementedError();
   }
 

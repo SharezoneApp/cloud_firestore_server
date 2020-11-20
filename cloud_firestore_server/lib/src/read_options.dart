@@ -19,7 +19,7 @@ class ReadOptions {
   /// Adding a field mask does not filter results. Documents do not need to
   /// contain values for all the fields in the mask to be part of the result
   /// set.
-  ReadOptions({@required this.fieldPath}) {
+  ReadOptions({required this.fieldPath}) {
     ArgumentError.checkNotNull(fieldPath, 'fieldPath');
   }
 }

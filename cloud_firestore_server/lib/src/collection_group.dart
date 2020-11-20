@@ -10,7 +10,7 @@ import 'query_partition.dart';
 class CollectionGroup extends Query {
   CollectionGroup(
     InstanceResources instanceResources, {
-    @required String path,
+    required String path,
   }) : super(instanceResources, path: path);
 
   /// Partitions a query by returning partition cursors that can be used to run

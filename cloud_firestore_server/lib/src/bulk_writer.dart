@@ -4,8 +4,8 @@ class BulkWriterOptions {
   static const defaultInitialOpsPerSecond = 500;
 
   final bool throttlingEnabled;
-  final int /*!*/ initialOpsPerSecond;
-  final int maxOpsPerSecond;
+  final int initialOpsPerSecond;
+  final int? maxOpsPerSecond;
 
   BulkWriterOptions.disableThrottling()
       : throttlingEnabled = false,
@@ -34,11 +34,11 @@ class BulkWriterOptions {
           initialOpsPerSecond, 'initialOpsPerSecond', "can't be negative");
     }
     if (maxOpsPerSecond != null) {
-      if (maxOpsPerSecond.isNegative) {
+      if (maxOpsPerSecond!.isNegative) {
         throw ArgumentError.value(
             maxOpsPerSecond, 'maxOpsPerSecond', "can't be negative");
       }
-      if (initialOpsPerSecond > maxOpsPerSecond) {
+      if (initialOpsPerSecond > maxOpsPerSecond!) {
         throw ArgumentError(
             "initialOpsPerSecond ($initialOpsPerSecond) can't be higher than maxOpsPerSecond ($maxOpsPerSecond)");
       }
