@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 /// Options to configure throttling on [BulkWriter]
 class BulkWriterOptions {
   static const defaultInitialOpsPerSecond = 500;
