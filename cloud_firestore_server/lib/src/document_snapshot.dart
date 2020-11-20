@@ -3,7 +3,7 @@ import 'snapshot_metadata.dart';
 import 'timestamp.dart';
 
 class DocumentSnapshot {
-  DocumentSnapshot(this.id, this._data, {this.exists});
+  DocumentSnapshot(this.id, this._data, {required this.exists});
 
   /// This document's given ID for this snapshot.
   final String id;
@@ -16,7 +16,7 @@ class DocumentSnapshot {
   ///   print('Data: ${documentSnapshot.data()}');
   /// }
   /// ```
-  final bool? exists;
+  final bool exists;
 
   /// Returns the [DocumentReference] of this snapshot.
   @Deprecated('Unimplemented')
@@ -49,7 +49,7 @@ class DocumentSnapshot {
   /// Data can be accessed by providing a dot-notated path or [FieldPath]
   /// which recursively finds the specified data. If no data could be found
   /// at the specified path, a [StateError] will be thrown.
-  Object? get(Object field) => _data == null ? _data![field as String] : null;
+  Object? get(Object field) => _data != null ? _data![field as String] : null;
 
   /// Gets a nested field by [String] or [FieldPath] from this [DocumentSnapshot].
   ///
@@ -57,4 +57,9 @@ class DocumentSnapshot {
   /// which recursively finds the specified data. If no data could be found
   /// at the specified path, a [StateError] will be thrown.
   Object? operator [](Object field) => get(field);
+
+  @override
+  String toString() {
+    return 'DocumentSnapshot(id: $id, data: $_data)';
+  }
 }
