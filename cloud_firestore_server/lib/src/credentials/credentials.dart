@@ -3,10 +3,7 @@ import 'dart:io';
 
 import 'package:meta/meta.dart';
 
-void _throwIfNullOrEmpty(String value, String name) {
-  if (value == null) {
-    throw ArgumentError.notNull(name);
-  }
+void _throwIfEmpty(String value, String name) {
   if (value.isEmpty) {
     throw ArgumentError("Invalid Argument: $name can't be an empty string.");
   }
@@ -16,15 +13,15 @@ class ServiceAccountCredentials {
   static const _credentialsVarName = 'GOOGLE_APPLICATION_CREDENTIALS';
 
   /// The email address of this service account.
-  final String email;
+  final String/*!*/ email;
 
   /// The clientId.
-  final String clientId;
+  final String/*!*/ clientId;
 
   /// Private key.
-  final String privateKey;
+  final String/*!*/ privateKey;
 
-  final String projectId;
+  final String/*!*/ projectId;
 
   ServiceAccountCredentials({
     @required this.email,
@@ -32,10 +29,10 @@ class ServiceAccountCredentials {
     @required this.privateKey,
     @required this.projectId,
   }) {
-    _throwIfNullOrEmpty(email, 'email');
-    _throwIfNullOrEmpty(clientId, 'clientId');
-    _throwIfNullOrEmpty(privateKey, 'privateKey');
-    _throwIfNullOrEmpty(projectId, 'projectId');
+    _throwIfEmpty(email, 'email');
+    _throwIfEmpty(clientId, 'clientId');
+    _throwIfEmpty(privateKey, 'privateKey');
+    _throwIfEmpty(projectId, 'projectId');
   }
 
   factory ServiceAccountCredentials.fromPath(String path) {
@@ -56,7 +53,7 @@ class ServiceAccountCredentials {
     final clientId = jsonMap['client_id'] as String;
     final privateKey = jsonMap['private_key'] as String;
     final email = jsonMap['client_email'] as String;
-    final type = jsonMap['type'] as String;
+    final type = jsonMap['type'] as String/*!*/;
     final projectId = jsonMap['project_id'] as String;
 
     if (type != 'service_account') {

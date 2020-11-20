@@ -42,17 +42,17 @@ class Query {
 
   Query where(
     // TODO: Find out why this is not a string - because of FieldValues?
-    dynamic field, {
-    dynamic isEqualTo,
-    dynamic isNotEqualTo,
-    dynamic isLessThan,
-    dynamic isLessThanOrEqualTo,
-    dynamic isGreaterThan,
-    dynamic isGreaterThanOrEqualTo,
-    dynamic arrayContains,
-    List<dynamic> arrayContainsAny,
-    List<dynamic> whereIn,
-    List<dynamic> whereNotIn,
+    Object field, {
+    Object isEqualTo,
+    Object isNotEqualTo,
+    Object isLessThan,
+    Object isLessThanOrEqualTo,
+    Object isGreaterThan,
+    Object isGreaterThanOrEqualTo,
+    Object arrayContains,
+    List<Object> arrayContainsAny,
+    List<Object> whereIn,
+    List<Object> whereNotIn,
     bool isNull,
   }) {
     return _copyWith(
@@ -69,7 +69,7 @@ class Query {
   Query _copyWith({
     String fieldPath,
     String operation,
-    dynamic value,
+    Object value,
     int limit,
   }) {
     return Query(

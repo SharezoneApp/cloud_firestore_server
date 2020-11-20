@@ -4,12 +4,12 @@ class BulkWriterOptions {
   static const defaultInitialOpsPerSecond = 500;
 
   final bool throttlingEnabled;
-  final int initialOpsPerSecond;
+  final int /*!*/ initialOpsPerSecond;
   final int maxOpsPerSecond;
 
   BulkWriterOptions.disableThrottling()
       : throttlingEnabled = false,
-        initialOpsPerSecond = null,
+        initialOpsPerSecond = defaultInitialOpsPerSecond,
         maxOpsPerSecond = null;
 
   // ignore: deprecated_member_use_from_same_package
@@ -26,21 +26,22 @@ class BulkWriterOptions {
   /// If this field is not set the maximum of operations per second will not be
   /// limited.
   BulkWriterOptions.enableThrottling({
-    final int initialOpsPerSecond,
+    this.initialOpsPerSecond = defaultInitialOpsPerSecond,
     this.maxOpsPerSecond,
-  })  : initialOpsPerSecond = initialOpsPerSecond ?? defaultInitialOpsPerSecond,
-        throttlingEnabled = true {
+  }) : throttlingEnabled = true {
     if (initialOpsPerSecond.isNegative) {
       throw ArgumentError.value(
           initialOpsPerSecond, 'initialOpsPerSecond', "can't be negative");
     }
-    if (maxOpsPerSecond.isNegative) {
-      throw ArgumentError.value(
-          maxOpsPerSecond, 'maxOpsPerSecond', "can't be negative");
-    }
-    if (maxOpsPerSecond != null && initialOpsPerSecond > maxOpsPerSecond) {
-      throw ArgumentError(
-          "initialOpsPerSecond ($initialOpsPerSecond) can't be higher than maxOpsPerSecond ($maxOpsPerSecond)");
+    if (maxOpsPerSecond != null) {
+      if (maxOpsPerSecond.isNegative) {
+        throw ArgumentError.value(
+            maxOpsPerSecond, 'maxOpsPerSecond', "can't be negative");
+      }
+      if (initialOpsPerSecond > maxOpsPerSecond) {
+        throw ArgumentError(
+            "initialOpsPerSecond ($initialOpsPerSecond) can't be higher than maxOpsPerSecond ($maxOpsPerSecond)");
+      }
     }
   }
 }

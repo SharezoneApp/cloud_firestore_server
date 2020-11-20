@@ -17,7 +17,7 @@ class SetOptions {
   /// Creates a [SetOptions] instance.
   SetOptions({
     this.merge,
-    List<dynamic> mergeFields,
+    List<Object> mergeFields,
   }) : assert(!(merge == null && mergeFields == null),
             "options must provide 'merge' or 'mergeFields'") {
     if (merge != null) {

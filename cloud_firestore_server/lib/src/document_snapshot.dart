@@ -42,19 +42,19 @@ class DocumentSnapshot {
 
   /// Contains all the data of this [DocumentSnapshot].
   Map<String, dynamic> data() =>
-      _data == null ? null : Map<String, dynamic>.from(_data);
+      _data == null ? const {} : Map<String, dynamic>.from(_data);
 
   /// Gets a nested field by [String] or [FieldPath] from this [DocumentSnapshot].
   ///
   /// Data can be accessed by providing a dot-notated path or [FieldPath]
   /// which recursively finds the specified data. If no data could be found
   /// at the specified path, a [StateError] will be thrown.
-  dynamic get(dynamic field) => _data[field];
+  Object get(Object field) => _data == null ? _data[field] : null;
 
   /// Gets a nested field by [String] or [FieldPath] from this [DocumentSnapshot].
   ///
   /// Data can be accessed by providing a dot-notated path or [FieldPath]
   /// which recursively finds the specified data. If no data could be found
   /// at the specified path, a [StateError] will be thrown.
-  dynamic operator [](dynamic field) => get(field);
+  Object operator [](Object field) => get(field);
 }

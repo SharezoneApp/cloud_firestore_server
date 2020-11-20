@@ -13,7 +13,7 @@ extension MapToFirestoreMap on Map<String, dynamic> {
 extension ToFirestoreValueList<T> on Iterable<T> {
   Value toFirestoreValue() {
     final arrVal = ArrayValue()
-      ..values = map<Value>((e) => (e as dynamic).toFirestoreValue() as Value)
+      ..values = map<Value/*!*/>((e) => (e as dynamic).toFirestoreValue() as Value/*!*/)
           .toList();
     return Value()..arrayValue = arrVal;
   }
@@ -53,7 +53,7 @@ Value _toFirestoreValue(dynamic val) {
   );
 }
 
-extension ToFirestoreValue on dynamic {
+extension ToFirestoreValue on Object {
   Value toFirestoreValue() => _toFirestoreValue(this);
 }
 

@@ -12,7 +12,7 @@ Future<List<Document>> runQuery({
   @required String parentPath,
   @required ProjectsDatabasesDocumentsResourceApi api,
   @required http.Client client,
-  int limit,
+  int /*?*/ limit,
 }) async {
   final chatFieldReference = FieldReference()..fieldPath = fieldPath;
   final fstoreValue = '$value'.toFirestoreValue();
@@ -23,19 +23,21 @@ Future<List<Document>> runQuery({
   final filter = Filter()..fieldFilter = fieldFilter;
   final structuredQuery = StructuredQuery()
     ..where = filter
-    ..limit = limit
     ..from = [CollectionSelector()..collectionId = collectionId];
+  if (limit != null) {
+    structuredQuery.limit = limit;
+  }
   final runQueryRequest = RunQueryRequest()..structuredQuery = structuredQuery;
 
   final documents = await api.runQueryFixed(runQueryRequest,
-      client: client, parentOrNull: parentPath);
+      client: client, parent: parentPath);
   return documents;
 }
 
 Future<List<Document>> runMultiConditionQuery({
   @required List<Condition> conditions,
   @required String collectionId,
-  @required String parentPath,
+  @required String /*?*/ parentPath,
   @required ProjectsDatabasesDocumentsResourceApi api,
   @required http.Client client,
 }) async {
@@ -60,7 +62,7 @@ Future<List<Document>> runMultiConditionQuery({
   final runQueryRequest = RunQueryRequest()..structuredQuery = structuredQuery;
 
   final documents = await api.runQueryFixed(runQueryRequest,
-      client: client, parentOrNull: parentPath);
+      client: client, parent: parentPath);
   return documents;
 }
 
