@@ -4,7 +4,6 @@ import 'package:quiver/core.dart';
 
 import 'collection_reference.dart';
 import 'document_snapshot.dart';
-import 'firestore_api/document_id_extension.dart';
 import 'internal/internal.dart';
 
 class DocumentReference {

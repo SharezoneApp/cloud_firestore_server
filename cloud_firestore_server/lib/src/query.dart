@@ -1,4 +1,5 @@
-import 'firestore_api/document_id_extension.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:googleapis/firestore/v1.dart' as api;
 import 'internal/internal.dart';
 import 'query_document_snapshot.dart';
 import 'query_snapshot.dart';
@@ -7,31 +8,44 @@ class Query {
   final InstanceResources instanceResources;
 
   final String path;
-  final String? fieldPath;
-  final String? operation;
-  final dynamic value;
+  final List<Condition> conditions;
   final int? limitOfDocs;
 
   Query(
     this.instanceResources, {
     required this.path,
-    this.operation,
+    this.conditions = const [],
     this.limitOfDocs,
-    this.fieldPath,
-    this.value,
   });
 
   Future<QuerySnapshot> get() async {
-    final docs = await runQuery(
-      fieldPath: fieldPath!,
-      operation: operation!,
-      value: value,
+    if (conditions.isEmpty) {
+      throw UnimplementedError();
+    }
+    if (conditions.length == 1) {
+      final where = conditions.single;
+      final docs = await runQuery(
+        fieldPath: where.fieldPath,
+        operation: where.operation,
+        value: where.value,
+        collectionId: Pointer(path).components.last,
+        parentPath: Pointer(path).parentPathOrNull(),
+        api: instanceResources.firestoreApi,
+        client: instanceResources.client,
+      );
+      return _docsToQuerySnapshot(docs);
+    }
+    final docs = await runMultiConditionQuery(
+      conditions: conditions,
       collectionId: Pointer(path).components.last,
       parentPath: Pointer(path).parentPathOrNull(),
       api: instanceResources.firestoreApi,
       client: instanceResources.client,
     );
+    return _docsToQuerySnapshot(docs);
+  }
 
+  QuerySnapshot _docsToQuerySnapshot(List<api.Document> docs) {
     final queryDocs = docs
         .map((doc) => QueryDocumentSnapshot(doc.id, doc.fields.toPrimitives(),
             exists: true))
@@ -55,10 +69,12 @@ class Query {
     bool? isNull,
   }) {
     return _copyWith(
-      fieldPath: field as String,
-      operation: arrayContains != null ? 'ARRAY_CONTAINS' : 'EQUAL',
-      value: arrayContains ?? isEqualTo,
-    );
+        conditions: List.from(conditions)
+          ..add(Condition(
+            fieldPath: field as String,
+            operation: arrayContains != null ? 'ARRAY_CONTAINS' : 'EQUAL',
+            value: arrayContains ?? isEqualTo,
+          )));
   }
 
   Query limit(int limit) {
@@ -66,18 +82,14 @@ class Query {
   }
 
   Query _copyWith({
-    String? fieldPath,
-    String? operation,
-    Object? value,
+    List<Condition>? conditions,
     int? limit,
   }) {
     return Query(
       instanceResources,
       path: path,
-      fieldPath: fieldPath ?? this.fieldPath,
+      conditions: conditions ?? this.conditions,
       limitOfDocs: limit ?? limitOfDocs,
-      operation: operation ?? this.operation,
-      value: value ?? this.value,
     );
   }
 }
