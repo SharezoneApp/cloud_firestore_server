@@ -5,11 +5,13 @@ import 'internal/internal.dart';
 import 'query_document_snapshot.dart';
 import 'query_snapshot.dart';
 
-enum Direction {
+enum OrderDirection {
   ascending,
   descending,
 }
 
+/// A Query refers to a query which you can read or stream from. You can also
+/// construct refined Query objects by adding filters and ordering.
 class Query {
   final InstanceResources _instanceResources;
 
@@ -107,19 +109,19 @@ class Query {
   /// This function returns a new (immutable) instance of the [Query] (rather
   /// than modify the existing instance) to impose the field mask.
   ///
-  /// If [direction] is not specified, it will be [Direction.ascending].
+  /// If [direction] is not specified, it will be [OrderDirection.ascending].
   ///
   /// ```dart
   /// final query = firestore.collection('col').where('foo', isGreaterThan: 42);
   ///
-  /// final querySnapshot = await query.orderBy('foo', Direction.descending).get();
+  /// final querySnapshot = await query.orderBy('foo', OrderDirection.descending).get();
   /// for (final documentSnapshot in querySnapshot.docs) {
   ///   print('Found document at ${documentSnapshot.ref.path}');
   /// }
   /// ```
   @Deprecated('Unimplemented')
   Query orderBy(dynamic fieldPath,
-      {Direction direction = Direction.ascending}) {
+      {OrderDirection direction = OrderDirection.ascending}) {
     throw UnimplementedError();
   }
 
@@ -175,6 +177,137 @@ class Query {
     throw UnimplementedError();
   }
 
+  /// Specifies the offset of the returned results.
+  ///
+  /// This function returns a new (immutable) instance of the
+  /// [Query] (rather than modify the existing instance) to impose the offset.
+  ///
+  /// ```dart
+  /// final query = firestore.collection('col').where('foo', isGreaterThan: 42);
+  ///
+  /// final querySnapshot = await query.limit(10).offset(20).get();
+  /// for (final documentSnapshot in querySnapshot.docs) {
+  ///   print('Found document at ${documentSnapshot.ref.path}');
+  /// }
+  /// ```
+  @Deprecated('Unimplemented')
+  Query offset(int offset) {
+    throw UnimplementedError();
+  }
+
+  /// Takes a list of [values], creates and returns a new [Query] that starts at
+  /// the provided fields relative to the order of the query.
+  ///
+  /// The [values] must be in order of [orderBy] filters.
+  ///
+  /// Calling this method will replace any existing cursor "start" query
+  /// modifiers.
+  ///
+  /// ```dart
+  /// await firestore.collection('Col').orderBy('foo').startAt(['42']).get();
+  /// ```
+  ///
+  /// Calling this method will replace any existing cursor "start" query
+  /// modifiers.
+  @Deprecated('Unimplemented')
+  Query startAt(List<Object> values) {
+    throw UnimplementedError();
+  }
+
+  /// Creates and returns a new [Query] that starts at the provided document
+  /// (inclusive). The starting position is relative to the order of the query.
+  /// The document must contain all of the fields provided in the orderBy of
+  /// this query.
+  ///
+  /// Calling this method will replace any existing cursor "start" query
+  /// modifiers.
+  @Deprecated('Unimplemented')
+  Query startAtDocument(DocumentSnapshot document) {
+    throw UnimplementedError();
+  }
+
+  /// Takes a list of [values], creates and returns a new [Query] that starts
+  /// after the provided fields relative to the order of the query.
+  ///
+  /// The [values] must be in order of [orderBy] filters.
+  ///
+  /// ```dart
+  /// await firestore.collection('Col').orderBy('foo').startAfter(['42']).get();
+  /// ```
+  /// Calling this method will replace any existing cursor "start" query
+  /// modifiers.
+  @Deprecated('Unimplemented')
+  Query startAfter(List<Object> values) {
+    throw UnimplementedError();
+  }
+
+  /// Creates and returns a new [Query] that starts after the provided document
+  /// (exclusive). The starting position is relative to the order of the query.
+  /// The [documentSnapshot] must contain all of the fields provided in the
+  /// [orderBy] of this query.
+  ///
+  /// Calling this method will replace any existing cursor "start" query
+  /// modifiers.
+  @Deprecated('Unimplemented')
+  Query startAfterDocument(DocumentSnapshot document) {
+    throw UnimplementedError();
+  }
+
+  /// Creates and returns a new [Query] that ends before the provided document
+  /// snapshot (exclusive). The end position is relative to the order of the
+  /// query.
+  /// The document must contain all of the fields provided in the orderBy of
+  /// this query.
+  ///
+  /// Calling this method will replace any existing cursor "end" query modifiers.
+  @Deprecated('Unimplemented')
+  Query endBeforeDocument(DocumentSnapshot documentSnapshot) {
+    throw UnimplementedError();
+  }
+
+  /// Takes a list of [values], creates and returns a new [Query] that ends at
+  /// the provided fields relative to the order of the query.
+  ///
+  /// The [values] must be in order of [orderBy] filters.
+  ///
+  /// Calling this method will replace any existing cursor "end" query modifiers
+  @Deprecated('Unimplemented')
+  Query endAt(List<dynamic> values) {
+    throw UnimplementedError();
+  }
+
+  /// Creates and returns a new [Query] that ends at the provided document
+  /// (inclusive). The end position is relative to the order of the query.
+  /// The document must contain all of the fields provided in the orderBy of
+  /// this query.
+  ///
+  /// Cannot be used in combination with [endBefore], [endBeforeDocument], or
+  /// [endAt], but can be used in combination with [startAt],
+  /// [startAfter], [startAtDocument] and [startAfterDocument].
+  ///
+  /// See also:
+  ///
+  ///  * [startAfterDocument] for a query that starts after a document.
+  ///  * [startAtDocument] for a query that starts at a document.
+  ///  * [endBeforeDocument] for a query that ends before a document.
+  @Deprecated('Unimplemented')
+  Query endAtDocument(DocumentSnapshot documentSnapshot) {
+    throw UnimplementedError();
+  }
+
+  /// Takes a list of [values], creates and returns a new [Query] that ends
+  /// before the provided fields relative to the order of the query.
+  ///
+  /// The [values] must be in order of [orderBy] filters.
+  ///
+  /// Calling this method will replace any existing cursor "end" query
+  /// modifiers.
+  @Deprecated('Unimplemented')
+  Query endBefore(List<Object> values) {
+    throw UnimplementedError();
+  }
+
+  /// Executes the query and returns the results as a [QuerySnapshot].
   Future<QuerySnapshot> get() async {
     if (_conditions.isEmpty) {
       throw UnimplementedError();
@@ -200,6 +333,12 @@ class Query {
       client: _instanceResources.client,
     );
     return _docsToQuerySnapshot(docs);
+  }
+
+  /// Executes the query and streams the results as [QueryDocumentSnapshots].
+  @Deprecated('Unimplemented')
+  Stream<QuerySnapshot> snapshots() {
+    throw UnimplementedError();
   }
 
   QuerySnapshot _docsToQuerySnapshot(List<api.Document> docs) {
