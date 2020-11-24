@@ -8,7 +8,8 @@ Everything not implemented is marked as deprecated.
 If any Interface is not marked deprecated, it **does not** mean that it is fully implemented.
 Experiment for yourself there may not be documentation on what works and what does not.
 
-There are no tests. No guarantees that anything works. Use at your own risk. 
+There are no tests. No guarantees that anything works. Use at your own risk.   
+Currently only `docRef.set`, `docRef.get`and some basic Queries are supported. Even these will not function fully.
 
 In the future we might expand this library to be fully usable and publish it on pub.
 
