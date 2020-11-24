@@ -25,7 +25,6 @@ export 'src/query_document_snapshot.dart';
 export 'src/query_partition.dart';
 export 'src/query_snapshot.dart';
 export 'src/read_options.dart';
-export 'src/set_options.dart';
 export 'src/timestamp.dart';
 export 'src/transaction.dart';
 export 'src/write_batch.dart';

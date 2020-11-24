@@ -1,5 +1,4 @@
 import 'package:cloud_firestore_server/src/read_options.dart';
-import 'package:cloud_firestore_server/src/set_options.dart';
 
 import 'document_reference.dart';
 import 'document_snapshot.dart';
@@ -83,15 +82,14 @@ class Transaction {
   }
 
   /// Writes to the document referred to by the provided [DocumentReference].
-  /// If the document does not exist yet, it will be created. If you pass
-  /// [SetOptions], the provided data can be merged into the existing document.
+  /// If the document does not exist yet, it will be created.
+  /// If you pass [merge] or [mergeFields], the provided data can be merged into
+  /// the existing document.
   ///
-  /// [options] can be used to configure the set behavior.
-  ///
-  /// If [SetOptions.merge] is true, [set()] merges the values specified in its
-  /// data argument. Fields omitted from this set() call remain untouched.
-  ///
-  /// If [SetOptions.mergeFields] is provided, [set()] only replaces the specified
+  /// If [merge] is true, set() merges the values
+  /// specified in its data argument. Fields omitted from this set() call
+  /// remain untouched.
+  /// If [mergeFields] is provided, set() only replaces the specified
   /// field paths. Any field path that is not specified is ignored and remains
   /// untouched.
   ///
@@ -105,7 +103,8 @@ class Transaction {
   Transaction set(
     DocumentReference documentReference,
     Map<String, dynamic> data, {
-    SetOptions? options,
+    bool? merge,
+    bool? mergeFields,
   }) {
     throw UnimplementedError();
   }

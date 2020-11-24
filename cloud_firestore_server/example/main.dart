@@ -7,6 +7,7 @@ Future<void> main() async {
   final firestore = await Firestore.newInstance(credentials: credentials);
 
   final document = await firestore.collection('Chats').doc('my-msg-123').get();
+
   final msg = document.get('messageText');
   print(msg);
 }

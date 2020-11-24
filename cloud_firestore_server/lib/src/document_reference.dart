@@ -172,14 +172,15 @@ class DocumentReference {
 
   /// Writes to the document referred to by this DocumentReference. If the
   /// document does not yet exist, it will be created.
-  /// If [SetOptions] are passed, the provided data can be merged into an
-  /// existing document.
+  /// If you pass [merge] or [mergeFields], the provided data can be merged into
+  /// the existing document.
   ///
-  /// If [SetOptions.merge] is true, [set()] merges the values specified in its
-  /// [data] argument. Fields omitted from this [set()] call remain untouched.
-  /// If [SetOptions.mergeFields] is provided, [set()] only replaces the
-  /// specified field paths.
-  /// Any field path that is not specified is ignored and remains untouched.
+  /// If [merge] is true, set() merges the values
+  /// specified in its data argument. Fields omitted from this set() call
+  /// remain untouched.
+  /// If [mergeFields] is provided, set() only replaces the specified
+  /// field paths. Any field path that is not specified is ignored and remains
+  /// untouched.
   ///
   /// Returns a [WriteResult] with the write time of this set.
   ///
@@ -191,7 +192,8 @@ class DocumentReference {
   /// ```
   Future<void> set(
     Map<String, dynamic> data, {
-    @Deprecated('Unimplemented') SetOptions? options,
+    @Deprecated('Unimplemented') bool? merge,
+    @Deprecated('Unimplemented') bool? mergeFields,
   }) async {
     final document = api.Document();
     document.fields = data.toFirestoreMap();

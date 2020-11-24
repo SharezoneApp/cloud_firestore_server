@@ -1,6 +1,5 @@
 import 'document_reference.dart';
 import 'precondition.dart';
-import 'set_options.dart';
 
 /// A Firestore [WriteBatch] that can be used to atomically commit multiple
 /// write operations at once.
@@ -58,14 +57,13 @@ class WriteBatch {
   /// Write to the document referred to by the provided [DocumentReference].
   ///
   /// If the document does not exist yet, it will be created.
-  /// If you pass [SetOptions], the provided data can be merged into the
-  /// existing document.
+  /// If you pass [merge] or [mergeFields], the provided data can be merged into
+  /// the existing document.
   ///
-  /// [options] is an object to configure the set behavior.
-  /// If [options.merge] is true, set() merges the values
+  /// If [merge] is true, set() merges the values
   /// specified in its data argument. Fields omitted from this set() call
   /// remain untouched.
-  /// If [options.mergeFields] is provided, set() only replaces the specified
+  /// If [mergeFields] is provided, set() only replaces the specified
   /// field paths. Any field path that is not specified is ignored and remains
   /// untouched.
   ///
@@ -81,8 +79,12 @@ class WriteBatch {
   /// print('Successfully executed batch.');
   /// ```
   @Deprecated('Unimplemented')
-  WriteBatch set(DocumentReference documentRef, Map<String, dynamic> data,
-      {SetOptions? options}) {
+  WriteBatch set(
+    DocumentReference documentRef,
+    Map<String, dynamic> data, {
+    bool? merge,
+    bool? mergeFields,
+  }) {
     throw UnimplementedError();
   }
 
