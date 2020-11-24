@@ -1,5 +1,4 @@
 import 'package:cloud_firestore_server/src/document_snapshot.dart';
-import 'package:cloud_firestore_server/src/read_options.dart';
 import 'package:meta/meta.dart';
 
 import 'src/bulk_writer.dart';
@@ -24,7 +23,6 @@ export 'src/query.dart';
 export 'src/query_document_snapshot.dart';
 export 'src/query_partition.dart';
 export 'src/query_snapshot.dart';
-export 'src/read_options.dart';
 export 'src/timestamp.dart';
 export 'src/transaction.dart';
 export 'src/write_batch.dart';
@@ -241,18 +239,25 @@ class Firestore {
 
   /// Retrieves multiple documents from Firestore.
   ///
+  /// [fieldMask] is a list of field paths.
+  /// It specifies the set of fields to return and reduces the amount
+  /// of data transmitted by the backend.
+  /// Adding a field mask does not filter results. Documents do not need to
+  /// contain values for all the fields in the mask to be part of the result
+  /// set.
+  ///
   /// dart```
   /// final docRef1 = firestore.doc('col/doc1');
   /// final docRef2 = firestore.doc('col/doc2');
   ///
-  /// final docs = await firestore.getAll([docRef1, docRef2], options: ReadOptions(fieldPath: 'user'));
+  /// final docs = await firestore.getAll([docRef1, docRef2], fieldPaths: ['user']);
   /// print('First document: ${docs[0]}');
   /// print('Second document: ${docs[1]}');
   /// ```
   @Deprecated('Unimplemented')
   Future<List<DocumentSnapshot>> getAll(
     List<DocumentReference> documentReferences, {
-    ReadOptions? options,
+    List<Object>? fieldMask,
   }) {
     throw UnimplementedError();
   }

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore_server/src/read_options.dart';
-
 import 'document_reference.dart';
 import 'document_snapshot.dart';
 import 'precondition.dart';
@@ -42,6 +40,13 @@ class Transaction {
   /// Retrieves multiple documents from Firestore. Holds a pessimistic lock on
   /// all returned documents.
   ///
+  /// [fieldMask] is a list of field paths.
+  /// It specifies the set of fields to return and reduces the amount
+  /// of data transmitted by the backend.
+  /// Adding a field mask does not filter results. Documents do not need to
+  /// contain values for all the fields in the mask to be part of the result
+  /// set.
+  ///
   /// ```dart
   /// final firstDoc = firestore.doc('col/doc1');
   /// final secondDoc = firestore.doc('col/doc2');
@@ -56,7 +61,7 @@ class Transaction {
   @Deprecated('Unimplemented')
   Future<List<DocumentSnapshot>> getAll(
     List<DocumentReference> documentReferences, {
-    ReadOptions? options,
+    List<Object>? fieldMask,
   }) {
     throw UnimplementedError();
   }
