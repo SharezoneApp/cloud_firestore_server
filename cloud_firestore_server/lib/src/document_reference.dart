@@ -7,6 +7,13 @@ import 'collection_reference.dart';
 import 'document_snapshot.dart';
 import 'internal/internal.dart';
 
+/// A DocumentReference refers to a document location in a Firestore database
+/// and can be used to write, read, or listen to the location.
+///
+/// The document at the referenced location may or may not exist.
+///
+/// A DocumentReference can also be used to create a [CollectionReference] to a
+/// subcollection.
 class DocumentReference {
   final String _path;
   final InstanceResources _instanceResources;
