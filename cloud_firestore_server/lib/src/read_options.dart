@@ -1,5 +1,3 @@
-import 'field_path.dart';
-
 /// An options object that can be used to configure the behavior of [getAll()]
 /// calls. By providing a [fieldMask], these calls can be configured to only
 /// return a subset of fields.

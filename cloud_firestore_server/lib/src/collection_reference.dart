@@ -11,21 +11,17 @@ import 'query.dart';
 /// inherited from [Query]).
 class CollectionReference extends Query {
   final String _path;
+  final InstanceResources _instanceResources;
 
   CollectionReference(
     InstanceResources instanceResources, {
     required String path,
   })   : _path = path,
+        _instanceResources = instanceResources,
         super(
           instanceResources,
           path: path,
         );
-
-  /// The [Firestore] Instance for this Firestore Database.
-  @Deprecated('Unimplemented')
-  Firestore get firestore {
-    throw UnimplementedError();
-  }
 
   /// The last path element of the referenced document.
   ///
@@ -74,7 +70,7 @@ class CollectionReference extends Query {
       throw UnimplementedError('Automatic ID generation not implemented');
     }
     final _documentPath = Pointer(path).documentPath(documentPath);
-    return DocumentReference(instanceResources, path: _documentPath);
+    return DocumentReference(_instanceResources, path: _documentPath);
   }
 
   /// Retrieves the list of documents in this collection.
@@ -125,13 +121,13 @@ class CollectionReference extends Query {
     return identical(this, other) ||
         other is CollectionReference &&
             other.path == path &&
-            other.instanceResources.databasePath ==
-                instanceResources.databasePath;
+            other._instanceResources.databasePath ==
+                _instanceResources.databasePath;
   }
 
   @override
   int get hashCode =>
-      hash2(path.hashCode, instanceResources.databasePath.hashCode);
+      hash2(path.hashCode, _instanceResources.databasePath.hashCode);
 
   @override
   String toString() {

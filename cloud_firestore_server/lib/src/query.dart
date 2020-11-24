@@ -1,6 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:cloud_firestore_server/cloud_firestore_server.dart';
 import 'package:googleapis/firestore/v1.dart' as api;
+import 'package:cloud_firestore_server/cloud_firestore_server.dart';
 import 'internal/internal.dart';
 import 'query_document_snapshot.dart';
 import 'query_snapshot.dart';
