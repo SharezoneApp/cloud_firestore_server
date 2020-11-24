@@ -20,6 +20,15 @@ class DocumentReference {
     throw UnimplementedError();
   }
 
+  /// The last path element of the referenced document.
+  ///
+  /// ```dart
+  /// assert(firestore.doc('col/my-doc').id == 'my-doc');
+  /// ```
+  String get id {
+    return Pointer(_path).id;
+  }
+
   /// A reference to the collection to which this DocumentReference belongs.
   ///
   /// ```dart
