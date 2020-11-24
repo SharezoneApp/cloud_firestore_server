@@ -12,7 +12,7 @@ class SetOptions {
   /// Changes the behavior of set() calls to only replace the specified field paths.
   ///
   /// Any field path that is not specified is ignored and remains untouched.
-  List<FieldPath>? mergeFields;
+  List<Object>? mergeFields;
 
   /// Creates a [SetOptions] instance.
   SetOptions({

@@ -10,10 +10,13 @@ import 'query.dart';
 /// document references, and querying for documents (using the methods
 /// inherited from [Query]).
 class CollectionReference extends Query {
+  final String _path;
+
   CollectionReference(
     InstanceResources instanceResources, {
     required String path,
-  }) : super(
+  })   : _path = path,
+        super(
           instanceResources,
           path: path,
         );
@@ -50,9 +53,8 @@ class CollectionReference extends Query {
 
   /// A string representing the path of the referenced collection (relative
   /// to the root of the database).
-  @override
   String get path {
-    return super.path;
+    return _path;
   }
 
   /// Gets a [DocumentReference] instance that refers to the document at the

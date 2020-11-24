@@ -20,7 +20,7 @@ class DocumentSnapshot {
 
   /// Returns the [DocumentReference] of this snapshot.
   @Deprecated('Unimplemented')
-  DocumentReference get reference {
+  DocumentReference get ref {
     throw UnimplementedError();
   }
 

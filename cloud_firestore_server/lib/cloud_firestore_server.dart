@@ -20,6 +20,7 @@ export 'src/document_snapshot.dart';
 export 'src/field_path.dart';
 export 'src/field_path.dart';
 export 'src/precondition.dart';
+export 'src/query.dart';
 export 'src/query_document_snapshot.dart';
 export 'src/query_partition.dart';
 export 'src/query_snapshot.dart';
