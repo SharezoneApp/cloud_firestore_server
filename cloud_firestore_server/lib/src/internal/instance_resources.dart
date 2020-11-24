@@ -45,3 +45,17 @@ Future<InstanceResources> createInstanceResources(
     projectId: credentials.projectId,
   );
 }
+
+/// Creates unauthenticated [InstanceResources] for the use of offline testing.
+Future<InstanceResources> createTestInstanceResources() async {
+  final client = http.Client();
+
+  final ProjectsDatabasesDocumentsResourceApi api =
+      FirestoreApi(client).projects.databases.documents;
+
+  return InstanceResources(
+    client: client,
+    firestoreApi: api,
+    projectId: 'non-existing-project--TESTING',
+  );
+}

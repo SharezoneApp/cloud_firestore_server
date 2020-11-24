@@ -1,5 +1,6 @@
 import 'package:cloud_firestore_server/src/document_snapshot.dart';
 import 'package:cloud_firestore_server/src/read_options.dart';
+import 'package:meta/meta.dart';
 
 import 'src/bulk_writer.dart';
 import 'src/collection_group.dart';
@@ -27,6 +28,7 @@ export 'src/set_options.dart';
 export 'src/timestamp.dart';
 export 'src/transaction.dart';
 export 'src/write_batch.dart';
+export 'src/write_result.dart';
 
 class Firestore {
   final InstanceResources _instanceResources;
@@ -46,6 +48,11 @@ class Firestore {
         credentials ?? ServiceAccountCredentials.applicationDefault();
 
     return Firestore._(await createInstanceResources(_credentials));
+  }
+
+  @visibleForTesting
+  static Future<Firestore> internal() async {
+    return Firestore._(await createTestInstanceResources());
   }
 
   Firestore._(this._instanceResources);
