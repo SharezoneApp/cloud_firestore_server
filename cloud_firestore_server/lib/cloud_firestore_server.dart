@@ -18,6 +18,7 @@ export 'src/document_reference.dart';
 export 'src/document_snapshot.dart';
 export 'src/field_path.dart';
 export 'src/field_path.dart';
+export 'src/firebase_exception.dart';
 export 'src/precondition.dart';
 export 'src/query.dart';
 export 'src/query_document_snapshot.dart';

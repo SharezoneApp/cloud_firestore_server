@@ -253,12 +253,19 @@ class DocumentReference {
     if (precondition?.lastUpdateTime != null) {
       throw UnimplementedError();
     }
-    await _instanceResources.firestoreApi.delete(
-      _documentName,
-      currentDocument_updateTime:
-          precondition?.lastUpdateTime?.toUtcIsoString(),
-      currentDocument_exists: precondition?.exists,
-    );
+    try {
+      await _instanceResources.firestoreApi.delete(
+        _documentName,
+        currentDocument_updateTime:
+            precondition?.lastUpdateTime?.toUtcIsoString(),
+        currentDocument_exists: precondition?.exists,
+      );
+    } on api.DetailedApiRequestError catch (e) {
+      throw FirebaseException(
+        code: e.jsonResponse?['error']?['status'] as String?,
+        message: e.message,
+      );
+    }
     // We do not seem to get the Write-Time back here?
     // ignore: avoid_redundant_argument_values
     return WriteResult(writeTime: null);

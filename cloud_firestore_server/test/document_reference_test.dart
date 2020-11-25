@@ -19,6 +19,22 @@ Future<void> main() async {
       final doc = await docRef.get();
       expect(doc.exists, false);
     });
+
+    test(
+        '.delete throws $FirebaseException (NOT_FOUND) if document does not exist and precondition.exists is true',
+        () async {
+      // Arrange
+      final docRef = firestore.doc('col/doc23323');
+
+      // Act
+      try {
+        await docRef.delete(precondition: Precondition(exists: true));
+        fail('Should throw');
+      } catch (e) {
+        final exception = e as FirebaseException;
+        expect(exception.code, 'NOT_FOUND');
+      }
+    });
     test(
       '.delte with .lastUpdateTime fails if a document was not last updated at given lastUpdateTime',
       () async {
