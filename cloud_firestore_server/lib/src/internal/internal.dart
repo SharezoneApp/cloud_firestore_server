@@ -6,3 +6,4 @@ export 'instance_resources.dart';
 export 'path_string_validation.dart';
 export 'pointer.dart';
 export 'run_query.dart';
+export 'serilization_and_deserilization/serialization_and_deserialization.dart';

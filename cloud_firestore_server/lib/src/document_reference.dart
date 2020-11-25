@@ -1,6 +1,7 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart' as api;
 import 'package:cloud_firestore_server/cloud_firestore_server.dart';
+import 'package:meta/meta.dart';
 import 'package:quiver/core.dart';
 
 import 'collection_reference.dart';
@@ -17,6 +18,8 @@ import 'internal/internal.dart';
 class DocumentReference {
   final String _path;
   final InstanceResources _instanceResources;
+  String get _documentName =>
+      '${_instanceResources.databasePath}/documents/$path';
 
   DocumentReference(this._instanceResources, {required String path})
       : _path = path;
@@ -159,15 +162,16 @@ class DocumentReference {
   Future<DocumentSnapshot> get() async {
     api.Document doc;
     try {
-      doc = await _instanceResources.firestoreApi
-          .get('${_instanceResources.databasePath}/documents/$path');
+      doc = await _instanceResources.firestoreApi.get(_documentName);
     } on api.DetailedApiRequestError catch (e) {
       if (e.status == 404) {
-        return DocumentSnapshot(path.split('/').last, null, exists: false);
+        return DocumentSnapshot.nonExisting(path.split('/').last);
       }
       rethrow;
     }
-    return DocumentSnapshot(doc.id, doc.fields.toPrimitives(), exists: true);
+    return DocumentSnapshot.existing(doc.id, doc.fields.toPrimitives(),
+        readTime: Timestamp.now(),
+        updateTime: doc.updateTime.toTimestampOrThrow());
   }
 
   /// Writes to the document referred to by this DocumentReference. If the
@@ -199,8 +203,7 @@ class DocumentReference {
     document.fields = data.toFirestoreMap();
 
     /// Hat das wirklich die selbe Semantik wie doc.set() bei fstore admin?
-    await _instanceResources.firestoreApi
-        .patch(document, '${_instanceResources.databasePath}/documents/$path');
+    await _instanceResources.firestoreApi.patch(document, _documentName);
   }
 
   /// Updates fields in the document referred to by this DocumentReference.
@@ -225,11 +228,20 @@ class DocumentReference {
   ///
   /// A delete for a non-existing document is treated as a success (unless
   /// a Precondition with lastUptimeTime is provided).
+  ///
+  /// --- [Precondition.lastUpdateTime] DOES NOT WORK YET. ---
   /// If [Precondition.lastUpdateTime] is set, Firestore enforces that the
   /// document was last updated at lastUpdateTime. Fails the delete if the
   /// document was last updated at a different time.
+  /// --- [Precondition.lastUpdateTime] DOES NOT WORK YET. ---
+  ///
+  /// If [Precondition.exists] is true the call will fail if the document does
+  /// not exist. Else it will succeed even if there was no document existing
+  /// before calling [delete].
   ///
   /// Returns a [WriteResult] that resolves with the delete time.
+  /// NOTE: Does not work as the [api.FirestoreApi] does not give back the write
+  /// time here.
   ///
   /// ```dart
   /// final documentRef = firestore.doc('col/doc');
@@ -237,9 +249,19 @@ class DocumentReference {
   /// await documentRef.delete()
   /// print('Document successfully deleted.');
   /// ```
-  @Deprecated('Unimplemented')
-  Future<WriteResult> delete({Precondition? precondition}) {
-    throw UnimplementedError();
+  Future<WriteResult> delete({@experimental Precondition? precondition}) async {
+    if (precondition?.lastUpdateTime != null) {
+      throw UnimplementedError();
+    }
+    await _instanceResources.firestoreApi.delete(
+      _documentName,
+      currentDocument_updateTime:
+          precondition?.lastUpdateTime?.toUtcIsoString(),
+      currentDocument_exists: precondition?.exists,
+    );
+    // We do not seem to get the Write-Time back here?
+    // ignore: avoid_redundant_argument_values
+    return WriteResult(writeTime: null);
   }
 
   @override

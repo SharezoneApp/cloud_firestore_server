@@ -49,8 +49,9 @@ class Firestore {
   }
 
   @visibleForTesting
-  static Future<Firestore> internal() async {
-    return Firestore._(await createTestInstanceResources());
+  static Future<Firestore> internal(
+      {String url = 'https://firestore.googleapis.com/'}) async {
+    return Firestore._(await createTestInstanceResources(rootUrl: url));
   }
 
   Firestore._(this._instanceResources);

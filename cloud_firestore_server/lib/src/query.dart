@@ -343,8 +343,12 @@ class Query {
 
   QuerySnapshot _docsToQuerySnapshot(List<api.Document> docs) {
     final queryDocs = docs
-        .map((doc) => QueryDocumentSnapshot(doc.id, doc.fields.toPrimitives(),
-            exists: true))
+        .map((doc) => QueryDocumentSnapshot(
+              doc.id,
+              doc.fields.toPrimitives(),
+              readTime: Timestamp.now(),
+              updateTime: doc.updateTime.toTimestampOrThrow(),
+            ))
         .toList();
     return QuerySnapshot(queryDocs);
   }

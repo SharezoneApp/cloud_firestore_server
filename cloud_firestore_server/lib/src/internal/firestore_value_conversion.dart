@@ -1,5 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart';
+import 'internal.dart';
 
 extension MapToFirestoreMap on Map<String, dynamic> {
   Map<String, Value> toFirestoreMap() {
@@ -103,14 +104,5 @@ extension ValueToPrimitive on Value {
       return DateTime.parse(timestampValue);
     }
     throw UnimplementedError('Cant convert to primtive ${toJson()}');
-  }
-}
-
-extension DateTimeToUtcIso8601StringExtension on DateTime {
-  String toUtcIso8601String() {
-    if (!isUtc) {
-      return toUtc().toIso8601String();
-    }
-    return toIso8601String();
   }
 }

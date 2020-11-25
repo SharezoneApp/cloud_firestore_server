@@ -1,6 +1,5 @@
 import 'timestamp.dart';
 
-@Deprecated('Unimplemented')
 class Precondition {
   final bool? exists;
   final Timestamp? lastUpdateTime;

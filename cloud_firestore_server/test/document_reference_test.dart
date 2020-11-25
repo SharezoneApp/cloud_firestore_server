@@ -1,8 +1,56 @@
 import 'package:cloud_firestore_server/cloud_firestore_server.dart';
 import 'package:test/test.dart';
 
-void main() {
+Future<void> main() async {
+  final firestore = await Firestore.internal(url: 'http://localhost:8080/');
   group('DocumentReference', () {
+    test('.delte deletes a document', () async {
+      // Arrange
+      final docRef = firestore.doc('col/doc123');
+      await docRef.set({'foo': 'bar'});
+
+      // Act
+      await docRef.delete();
+
+      // Assert
+      final doc = await docRef.get();
+      expect(doc.exists, false);
+    });
+    test(
+        '.delte with .lastUpdateTime fails if a document was not last updated at given lastUpdateTime',
+        () async {
+      // Arrange
+      final docRef = firestore.doc('col/doc123');
+      await docRef.set({'foo': 'bar'});
+
+      // Act
+      final exec = () => docRef.delete(
+          precondition: Precondition(lastUpdateTime: Timestamp.now()));
+
+      // Assert
+      expect(exec, throws);
+    });
+
+    test(
+        '.delte with .lastUpdateTime succeeds if document was last updated at given lastUpdateTime',
+        () async {
+      // Arrange
+      final docRef = firestore.doc('col/doc234');
+      await docRef.set({'foo': 'bar'});
+      final doc = await docRef.get();
+      final updateTime = doc.updateTime;
+
+      // Act
+      await docRef.delete(
+          precondition: Precondition(lastUpdateTime: updateTime));
+
+      // Assert
+      final deletedDoc = await docRef.get();
+      expect(doc.exists, false);
+    },
+        skip:
+            'Does not work - fails with "the stored version (1606336943323081) does not match the required base version (0)"');
+
     test('.path example test', () async {
       final firestore = await Firestore.internal();
 
