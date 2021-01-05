@@ -4,11 +4,8 @@ include: package:lint/analysis_options_package.yaml
 # Uncomment to specify additional rules.
 # linter:
 #   rules:
-#     - camel_case_types
 
 analyzer:
-  exclude: deprecated_member_use_from_same_package
   errors:
     missing_return: error
-#   exclude:
-#     - path/to/excluded/files/**
+    deprecated_member_use_from_same_package: ignore
