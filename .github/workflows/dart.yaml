@@ -1,0 +1,37 @@
+name: Dart CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  check-no-lints-and-todos:
+    runs-on: ubuntu-latest
+    container:
+      image:  google/dart:2.12-dev
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check for no lint Errors and no TODO comments
+      run: ./scripts/check_for_lint_errors_and_TODO_comments.sh
+
+  is-formatted:
+    runs-on: ubuntu-latest
+    container:
+      image:  google/dart:2.12-dev
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check that code is formatted
+      run: ./scripts/check_code_is_formatted.sh
+
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image:  google/dart:2.12-dev
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      env:
+        FIRESTORE_CREDENTIALS: ${{ secrets.FIRESTORE_CREDENTIALS }}
+      run: ./scripts/run_all_tests.sh
