@@ -50,10 +50,6 @@ resource "google_project" "my_project" {
   billing_account = var.gcp-billing-acc-id
 }
 
-output "service-account-id" {
-  value = google_service_account.terraform-service-account.email
-}
-
 resource "google_project_iam_binding" "terraform-account-iam" {
   project = google_project.my_project.project_id
   role    = "roles/editor"
@@ -122,4 +118,44 @@ resource "google_app_engine_application" "firestore" {
   # As GitHub Actions run in the US I will put Firestore there too.
   location_id   = "us-west3"
   database_type = "CLOUD_FIRESTORE"
+}
+
+# Service-Account to access Firestore
+resource "google_service_account" "firestore-client-service-account" {
+  account_id = "firestore-client"
+  project    = google_project.my_project.project_id
+}
+
+resource "google_project_iam_binding" "firestore-client-service-account-iam" {
+  project = google_project.my_project.project_id
+  role    = "roles/datastore.user"
+  members = ["serviceAccount:${google_service_account.terraform-service-account.email}"]
+}
+
+resource "google_service_account_key" "firestore-client-service-account-key" {
+  service_account_id = google_service_account.firestore-client-service-account.id
+}
+
+variable "github-token" {
+  sensitive = true 
+  type = string
+}
+
+provider "github" {
+  token = var.github-token
+  organization = "SharezoneApp"
+}
+
+resource "github_actions_secret" "firestore-client-credentials" {
+  repository = "cloud_firestore_server"
+  secret_name = "FIRESTORE_CREDENTIALS"
+  plaintext_value = google_service_account_key.firestore-client-service-account-key.private_key
+  
+  lifecycle {
+    # The google_service_account_key private_key is only outputted when creating the resource according to documentation.
+    # I don't want that Terraform wants to replace the github secret with the empty output when editing resources in the future.
+    # I have to add that I don't know if this is necessary and just preliminary - in my testing using terraform apply
+    # after this change did not due anything. I'm not sure if this will hold always true with future edits thus this change here.
+    ignore_changes = [ plaintext_value ]
+  }
 }

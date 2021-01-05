@@ -1,9 +1,27 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/hashicorp/github" {
+  version = "4.1.0"
+  hashes = [
+    "h1:ITf4Me7Us0WeGg5j5qzSEJBIiYywhMdUudEi9n6usPo=",
+    "zh:12a12ef18103cb942ae185c2faaa51973f9f55adf480254866169de0c1a2f870",
+    "zh:4f90da2eeed0182b68cd47b76f110eb35b5f0ce0ea2bdfde60cbdbad350910c6",
+    "zh:509f584e57e7960cd128e0b77eeefd8968e0e5f3dbc6f86f031f007720e817fc",
+    "zh:63c2b58b66ea7868fba323a4899a82bcdf43a3a4c7b2fdd2e241d94aebda996e",
+    "zh:7e7b72d1378acb21fdf116703ff865ebabe9fc014da89f93dfb3c505d5d0907f",
+    "zh:8b74873ce8eeaed0bd7e37c4bd0a826e25404ffc5b9f7126e923dee3596d8634",
+    "zh:8bf2aeaee8744f0140d5bfb850e958d0484b3657878e7d5f9e798ec2125300bd",
+    "zh:cedb3020864da3ec7d34d170747b682fd7e3b1a9f37518a871e4b6a60d4411e2",
+    "zh:d4b34183739236a22e38ce1e662495c9dbeb4f2065a607b6209e8427a30ca571",
+    "zh:e5a24e07208a0adc37bb54c510224a2dc56aa14adb7bb86da433ef86b4f6d0b3",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/google" {
   version = "3.51.0"
   hashes = [
+    "h1:8xNdMVIfbcpjPyC1f2bAMUi8qW65v/KjDAXGFYC2w28=",
     "h1:xSmUnxWTmQjfwBeWG5rMk5hzJPpqXmbpAOsnrtxZJbU=",
     "zh:378a3aa47b3a9ca096cd7a01a054e2cb1cd8118fbb8a6e4b9cf4cfe196ba9c0d",
     "zh:386706918657af83062fb8fbad0b91939e3b565c286e620e280b87af62dbb497",
@@ -22,6 +40,7 @@ provider "registry.terraform.io/hashicorp/google-beta" {
   version = "3.51.0"
   hashes = [
     "h1:WfwUQQEG90QdOu1wC1x2MVG+nlPV6hcagbpUFaNbroM=",
+    "h1:wCQ1nDWf2Uic51/LKSy9KjEX4lreUp0oOMytgrlAfgI=",
     "zh:0d2c872ae2485f9b3db5db9d8e6d47ccd22e0b41f5ca0d94610fc29b18aeae8f",
     "zh:4c7c46b04ace002989c4c849581160677128ed892e28f434f721f04e0bc659d5",
     "zh:54e6d1fd59bf8aad0dcf41095cf829c467ff2f8b224cab6d774eabe997195549",
