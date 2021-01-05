@@ -261,6 +261,8 @@ class DocumentReference {
         currentDocument_exists: precondition?.exists,
       );
     } on api.DetailedApiRequestError catch (e) {
+      // We are in the same package why does the linter complain?!
+      // ignore: invalid_use_of_internal_member
       throw FirebaseException(
         code: e.jsonResponse?['error']?['status'] as String?,
         message: e.message,

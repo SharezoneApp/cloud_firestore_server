@@ -4,7 +4,8 @@ class FirebaseException {
   final String? message;
   final String? code;
 
-  /// Only for internal use!
+  /// The constructor should only be used internally by the package as the API
+  /// is subject to change.
   @internal
   FirebaseException({this.code, this.message});
 

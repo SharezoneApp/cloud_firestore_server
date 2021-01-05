@@ -1,4 +1,4 @@
-// ignore: deprecated_member_use_from_same_package
+// ignore: deprecated_member_use
 /// Options to configure throttling on [BulkWriter]
 class BulkWriterOptions {
   static const defaultInitialOpsPerSecond = 500;
@@ -12,7 +12,7 @@ class BulkWriterOptions {
         initialOpsPerSecond = defaultInitialOpsPerSecond,
         maxOpsPerSecond = null;
 
-  // ignore: deprecated_member_use_from_same_package
+  // ignore: deprecated_member_use
   /// Enables throttling of the [BulkWriter].
   ///
   /// [initialOpsPerSecond] describes the initial maximum number of operations
