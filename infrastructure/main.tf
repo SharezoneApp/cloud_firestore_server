@@ -1,5 +1,13 @@
+terraform {
+  # Can only be used after bootstrapping the gcs bucket locally
+  backend "gcs" {
+    bucket  = "fstore-server-dart-pkg-tf-state-storage"
+    prefix  = "terraform/state"
+  }
+}
+
 provider "google" {
-    // Application default credentials via `gcloud auth application-default login`
+  // Application default credentials via `gcloud auth application-default login`
 }
 provider "google-beta" {
   /*
@@ -25,15 +33,21 @@ variable "gcp-org-id" {
   type      = string
 }
 
+variable "gcp-billing-acc-id" {
+  sensitive = true
+  type      = string
+}
+
 resource "google_service_account" "terraform-service-account" {
   account_id = "terraform"
   project    = google_project.my_project.project_id
 }
 
 resource "google_project" "my_project" {
-  name       = "Dart Firestore Server Package"
-  project_id = "firestore-server-dart-pkg"
-  org_id     = var.gcp-org-id
+  name            = "Dart Firestore Server Package"
+  project_id      = "firestore-server-dart-pkg"
+  org_id          = var.gcp-org-id
+  billing_account = var.gcp-billing-acc-id
 }
 
 output "service-account-id" {
@@ -83,6 +97,15 @@ resource "google_project_service" "enable_billing_api" {
   service                    = "cloudbilling.googleapis.com"
   disable_dependent_services = true
 }
+
+# Used to store Terraform state
+resource "google_storage_bucket" "state-store" {
+  project = google_project.my_project.project_id
+  name    = "fstore-server-dart-pkg-tf-state-storage"
+  # Google Free Tier location
+  location = "us-east1"
+}
+
 
 # -- End Bootstrap
 
