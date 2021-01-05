@@ -25,13 +25,14 @@ jobs:
     - name: Check that code is formatted
       run: ./scripts/check_code_is_formatted.sh
 
-  test:
-    runs-on: ubuntu-latest
-    container:
-      image:  google/dart:2.12-dev
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-      env:
-        FIRESTORE_CREDENTIALS: ${{ secrets.FIRESTORE_CREDENTIALS }}
-      run: ./scripts/run_all_tests.sh
+  # Unimplemented. See: https://github.com/SharezoneApp/cloud_firestore_server/issues/3 
+  # test:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image:  google/dart:2.12-dev
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Run tests
+  #     env:
+  #       FIRESTORE_CREDENTIALS: ${{ secrets.FIRESTORE_CREDENTIALS }}
+  #     run: ./scripts/run_all_tests.sh
