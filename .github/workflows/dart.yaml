@@ -34,7 +34,10 @@ jobs:
     - name: Run all tests that contact the remote Firestore database.
       env:
         FIRESTORE_CREDENTIALS: ${{ secrets.FIRESTORE_CREDENTIALS }}
-      run: ./scripts/run_remote_tests.sh
+      # Terraform base64 encodes the credentials so we decode them here.
+      run: |
+        FIRESTORE_CREDENTIALS=$(echo $FIRESTORE_CREDENTIALS | base64 --decode)
+        ./scripts/run_remote_tests.sh
 
   # Unimplemented. See: https://github.com/SharezoneApp/cloud_firestore_server/issues/3 
   # test:
