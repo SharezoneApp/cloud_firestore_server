@@ -27,14 +27,19 @@ class InstanceResources {
 /// from googleapis. Uses googleapis_auth to create an
 /// [googleapis_auth.AuthClient] for authenticated calls to Firestore.
 Future<InstanceResources> createInstanceResources(
-    ServiceAccountCredentials credentials) async {
+  ServiceAccountCredentials credentials, {
+  http.Client? innerClient,
+}) async {
   final _creds = googleapis_auth.ServiceAccountCredentials(
       credentials.email,
       googleapis_auth.ClientId.serviceAccount(credentials.clientId),
       credentials.privateKey);
 
-  const _scopes = [FirestoreApi.DatastoreScope];
-  final client = await googleapis_auth.clientViaServiceAccount(_creds, _scopes);
+  final client = await googleapis_auth.clientViaServiceAccount(
+    _creds,
+    [FirestoreApi.DatastoreScope],
+    baseClient: innerClient,
+  );
 
   final ProjectsDatabasesDocumentsResourceApi api =
       FirestoreApi(client).projects.databases.documents;
@@ -47,9 +52,11 @@ Future<InstanceResources> createInstanceResources(
 }
 
 /// Creates unauthenticated [InstanceResources] for the use of offline testing.
-Future<InstanceResources> createTestInstanceResources(
-    {required String rootUrl}) async {
-  final client = http.Client();
+Future<InstanceResources> createTestInstanceResources({
+  required String rootUrl,
+  http.Client? innerClient,
+}) async {
+  final client = innerClient ?? http.Client();
 
   final ProjectsDatabasesDocumentsResourceApi api =
       FirestoreApi(client, rootUrl: rootUrl).projects.databases.documents;

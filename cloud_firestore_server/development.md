@@ -14,5 +14,8 @@ $  firebase emulators:start --only firestore
 
 Now you can run the tests using:
 ```
-$ dart --no-sound-null-safety test
+$ dart --no-sound-null-safety test --exclude-tags remote
 ```
+
+This excludes the tests that connect to a real Firestore service and thus need valid credentials.
+These will run on Github and have the credentials provided via the environment.
