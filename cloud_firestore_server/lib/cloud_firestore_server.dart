@@ -1,5 +1,7 @@
 import 'package:cloud_firestore_server/src/document_snapshot.dart';
 import 'package:meta/meta.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:http/http.dart' as http;
 
 import 'src/bulk_writer.dart';
 import 'src/collection_group.dart';
@@ -50,9 +52,12 @@ class Firestore {
   }
 
   @visibleForTesting
-  static Future<Firestore> internal(
-      {String url = 'https://firestore.googleapis.com/'}) async {
-    return Firestore._(await createTestInstanceResources(rootUrl: url));
+  static Future<Firestore> internal({
+    String url = 'https://firestore.googleapis.com/',
+    http.Client? innerClient,
+  }) async {
+    return Firestore._(await createTestInstanceResources(
+        rootUrl: url, innerClient: innerClient));
   }
 
   Firestore._(this._instanceResources);
