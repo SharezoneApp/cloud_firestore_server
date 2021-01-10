@@ -8,6 +8,12 @@ import 'package:test/test.dart';
 // Easier to read in tests:
 // ignore_for_file: prefer_function_declarations_over_variables
 
+/// Returns the credentials for the live Firestore test database from the
+/// environment variable FIRESTORE_CREDENTIALS.
+/// This method is called to run the remote tests on Github Actions.
+/// The credentials are passed via Action Secrets.
+/// Locally the remote tests can be skipped via
+/// `dart --no-sound-null-safety test --exclude-tags remote`.
 ServiceAccountCredentials getCredentialsFromEnvironment() {
   final _creds = Platform.environment['FIRESTORE_CREDENTIALS'];
   if (_creds == null) {
@@ -19,6 +25,8 @@ ServiceAccountCredentials getCredentialsFromEnvironment() {
 }
 
 Future<void> main() async {
+  /// We seperate both as the remote tests can only be run on Github Actions as
+  /// locally one might not have the necessary credentials.
   group('(using Emulator)', () {
     runTests((innerClient) => Firestore.internal(
           url: 'http://localhost:8080/',
@@ -54,9 +62,10 @@ void runTests(
       expect(requestsAfter, hasLength(1));
     });
 
-    /// Here I test my own method implementation because after more than 3 years
-    /// the bug that querying with the googleapis package does not work is still
-    /// not fixed :(
+    /// The query method is a custom implementation we have to test seperately
+    /// from the implementation of the googleapis package.
+    /// The query implementation is custom made as after 3 years the bug that
+    /// querying with the googleapis package does not work is still not fixed :(
     /// https://github.com/dart-lang/googleapis/issues/25
     test(
         'passed to Firestore.internal using own query implementation gets the requests sent to the Firestore backend.',
