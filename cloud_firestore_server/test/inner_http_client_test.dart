@@ -54,12 +54,9 @@ void runTests(
     test(
         'passed to Firestore.internal using googleapis gets the requests sent to the Firestore backend.',
         () async {
-      final requestsBefore = List.from(innerClient.sentRequests);
       await firestore.doc('col/doc').get().ignoreResultAndExceptions();
-      final requestsAfter = List.from(innerClient.sentRequests);
 
-      expect(requestsBefore, isEmpty);
-      expect(requestsAfter, hasLength(1));
+      expect(innerClient.sentRequests, isNotEmpty);
     });
 
     /// The query method is a custom implementation we have to test seperately
@@ -70,16 +67,13 @@ void runTests(
     test(
         'passed to Firestore.internal using own query implementation gets the requests sent to the Firestore backend.',
         () async {
-      final requestsBefore = List.from(innerClient.sentRequests);
       await firestore
           .collection('col')
           .where('foo', isEqualTo: 'bar')
           .get()
           .ignoreResultAndExceptions();
-      final requestsAfter = List.from(innerClient.sentRequests);
 
-      expect(requestsBefore, isEmpty);
-      expect(requestsAfter, hasLength(1));
+      expect(innerClient.sentRequests, isNotEmpty);
     });
   });
 }
