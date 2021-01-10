@@ -1,5 +1,7 @@
 import 'package:cloud_firestore_server/src/document_snapshot.dart';
 import 'package:meta/meta.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:http/http.dart' as http;
 
 import 'src/bulk_writer.dart';
 import 'src/collection_group.dart';
@@ -40,19 +42,27 @@ class Firestore {
   /// Is usually "projects/[YOUR-PROJECT-ID]/databases/(default)"
   String get formattedName => _instanceResources.databasePath;
 
-  static Future<Firestore> newInstance(
-      {ServiceAccountCredentials? credentials}) async {
+  static Future<Firestore> newInstance({
+    ServiceAccountCredentials? credentials,
+    http.Client? innerClient,
+  }) async {
     /// Haven't tested [ServiceAccountCredentials.applicationDefault] yet.
     final _credentials =
         credentials ?? ServiceAccountCredentials.applicationDefault();
 
-    return Firestore._(await createInstanceResources(_credentials));
+    return Firestore._(await createInstanceResources(
+      _credentials,
+      innerClient: innerClient,
+    ));
   }
 
   @visibleForTesting
-  static Future<Firestore> internal(
-      {String url = 'https://firestore.googleapis.com/'}) async {
-    return Firestore._(await createTestInstanceResources(rootUrl: url));
+  static Future<Firestore> internal({
+    String url = 'https://firestore.googleapis.com/',
+    http.Client? innerClient,
+  }) async {
+    return Firestore._(await createTestInstanceResources(
+        rootUrl: url, innerClient: innerClient));
   }
 
   Firestore._(this._instanceResources);
