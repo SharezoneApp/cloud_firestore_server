@@ -8,8 +8,6 @@ void _throwIfEmpty(String value, String name) {
 }
 
 class ServiceAccountCredentials {
-  static const _credentialsVarName = 'GOOGLE_APPLICATION_CREDENTIALS';
-
   /// The email address of this service account.
   final String email;
 
@@ -67,6 +65,7 @@ class ServiceAccountCredentials {
     );
   }
 
+  static const _credentialsVarName = 'GOOGLE_APPLICATION_CREDENTIALS';
   factory ServiceAccountCredentials.applicationDefault() {
     final pathToDefaultCredentials = Platform.environment[_credentialsVarName]!;
     return ServiceAccountCredentials.fromPath(pathToDefaultCredentials);
