@@ -42,13 +42,18 @@ class Firestore {
   /// Is usually "projects/[YOUR-PROJECT-ID]/databases/(default)"
   String get formattedName => _instanceResources.databasePath;
 
-  static Future<Firestore> newInstance(
-      {ServiceAccountCredentials? credentials}) async {
+  static Future<Firestore> newInstance({
+    ServiceAccountCredentials? credentials,
+    http.Client? innerClient,
+  }) async {
     /// Haven't tested [ServiceAccountCredentials.applicationDefault] yet.
     final _credentials =
         credentials ?? ServiceAccountCredentials.applicationDefault();
 
-    return Firestore._(await createInstanceResources(_credentials));
+    return Firestore._(await createInstanceResources(
+      _credentials,
+      innerClient: innerClient,
+    ));
   }
 
   @visibleForTesting
