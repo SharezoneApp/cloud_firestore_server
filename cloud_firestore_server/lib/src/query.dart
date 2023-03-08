@@ -65,12 +65,15 @@ class Query {
     bool? isNull,
   }) {
     return _copyWith(
-        conditions: List.from(_conditions)
-          ..add(Condition(
+      conditions: List.from(_conditions)
+        ..add(
+          Condition(
             fieldPath: field as String,
             operation: arrayContains != null ? 'ARRAY_CONTAINS' : 'EQUAL',
             value: arrayContains ?? isEqualTo,
-          ),),);
+          ),
+        ),
+    );
   }
 
   /// Creates and returns a new [Query] that applies a field mask to the result
@@ -118,8 +121,10 @@ class Query {
   /// }
   /// ```
   @Deprecated('Unimplemented')
-  Query orderBy(dynamic fieldPath,
-      {OrderDirection direction = OrderDirection.ascending,}) {
+  Query orderBy(
+    dynamic fieldPath, {
+    OrderDirection direction = OrderDirection.ascending,
+  }) {
     throw UnimplementedError();
   }
 
@@ -341,12 +346,14 @@ class Query {
 
   QuerySnapshot _docsToQuerySnapshot(List<api.Document> docs) {
     final queryDocs = docs
-        .map((doc) => QueryDocumentSnapshot(
-              doc.id,
-              doc.fields.toPrimitives(),
-              readTime: Timestamp.now(),
-              updateTime: doc.updateTime.toTimestampOrThrow(),
-            ),)
+        .map(
+          (doc) => QueryDocumentSnapshot(
+            doc.id,
+            doc.fields.toPrimitives(),
+            readTime: Timestamp.now(),
+            updateTime: doc.updateTime.toTimestampOrThrow(),
+          ),
+        )
         .toList();
     return QuerySnapshot(queryDocs);
   }

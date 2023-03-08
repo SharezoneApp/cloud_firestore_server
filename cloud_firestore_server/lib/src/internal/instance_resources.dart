@@ -29,9 +29,10 @@ Future<InstanceResources> createInstanceResources(
   http.Client? innerClient,
 }) async {
   final creds = googleapis_auth.ServiceAccountCredentials(
-      credentials.email,
-      googleapis_auth.ClientId.serviceAccount(credentials.clientId),
-      credentials.privateKey,);
+    credentials.email,
+    googleapis_auth.ClientId.serviceAccount(credentials.clientId),
+    credentials.privateKey,
+  );
 
   final client = await googleapis_auth.clientViaServiceAccount(
     creds,

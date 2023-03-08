@@ -27,22 +27,35 @@ ServiceAccountCredentials getCredentialsFromEnvironment() {
 Future<void> main() async {
   /// We seperate both as the remote tests can only be run on Github Actions as
   /// locally one might not have the necessary credentials.
-  group('(using Emulator)', () {
-    runTests((innerClient) => Firestore.internal(
+  group(
+    '(using Emulator)',
+    () {
+      runTests(
+        (innerClient) => Firestore.internal(
           url: 'http://localhost:8080/',
           innerClient: innerClient,
-        ),);
-  }, tags: 'emulator',);
-  group('(using remote Firestore)', () {
-    runTests((innerClient) => Firestore.newInstance(
+        ),
+      );
+    },
+    tags: 'emulator',
+  );
+  group(
+    '(using remote Firestore)',
+    () {
+      runTests(
+        (innerClient) => Firestore.newInstance(
           credentials: getCredentialsFromEnvironment(),
           innerClient: innerClient,
-        ),);
-  }, tags: 'remote',);
+        ),
+      );
+    },
+    tags: 'remote',
+  );
 }
 
 void runTests(
-    Future<Firestore> Function(SpyingClient innerClient) setupFirestore,) {
+  Future<Firestore> Function(SpyingClient innerClient) setupFirestore,
+) {
   group('innerClient', () {
     late Firestore firestore;
     late SpyingClient innerClient;

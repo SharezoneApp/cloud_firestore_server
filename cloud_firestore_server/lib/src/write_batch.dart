@@ -49,8 +49,10 @@ class WriteBatch {
   /// print('Successfully executed batch.');
   /// ```
   @Deprecated('Unimplemented')
-  WriteBatch delete(DocumentReference documentRef,
-      {Precondition? precondition,}) {
+  WriteBatch delete(
+    DocumentReference documentRef, {
+    Precondition? precondition,
+  }) {
     throw UnimplementedError();
   }
 

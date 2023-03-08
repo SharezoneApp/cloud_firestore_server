@@ -82,7 +82,9 @@ class Transaction {
   /// ```
   @Deprecated('Unimplemented')
   Transaction create(
-      DocumentReference documentReference, Map<String, dynamic> data,) {
+    DocumentReference documentReference,
+    Map<String, dynamic> data,
+  ) {
     throw UnimplementedError();
   }
 
@@ -132,7 +134,9 @@ class Transaction {
   /// ```
   @Deprecated('Unimplemented')
   Transaction update(
-      DocumentReference documentReference, Map<String, dynamic> data,) {
+    DocumentReference documentReference,
+    Map<String, dynamic> data,
+  ) {
     throw UnimplementedError();
   }
 
@@ -153,8 +157,10 @@ class Transaction {
   /// });
   /// ```
   @Deprecated('Unimplemented')
-  Transaction delete(DocumentReference documentReference,
-      {Precondition? precondition,}) {
+  Transaction delete(
+    DocumentReference documentReference, {
+    Precondition? precondition,
+  }) {
     throw UnimplementedError();
   }
 }

@@ -13,7 +13,7 @@ class CollectionReference extends Query {
   CollectionReference(
     InstanceResources instanceResources, {
     required String path,
-  })   : _path = path,
+  })  : _path = path,
         _instanceResources = instanceResources,
         super(
           instanceResources,

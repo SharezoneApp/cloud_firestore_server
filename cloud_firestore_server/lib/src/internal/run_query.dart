@@ -30,8 +30,11 @@ Future<List<Document>> runQuery({
   }
   final runQueryRequest = RunQueryRequest()..structuredQuery = structuredQuery;
 
-  final documents = await api.runQueryFixed(runQueryRequest,
-      client: client, parent: parentPath,);
+  final documents = await api.runQueryFixed(
+    runQueryRequest,
+    client: client,
+    parent: parentPath,
+  );
   return documents;
 }
 
@@ -62,8 +65,11 @@ Future<List<Document>> runMultiConditionQuery({
     ..from = [CollectionSelector()..collectionId = collectionId];
   final runQueryRequest = RunQueryRequest()..structuredQuery = structuredQuery;
 
-  final documents = await api.runQueryFixed(runQueryRequest,
-      client: client, parent: parentPath,);
+  final documents = await api.runQueryFixed(
+    runQueryRequest,
+    client: client,
+    parent: parentPath,
+  );
   return documents;
 }
 
