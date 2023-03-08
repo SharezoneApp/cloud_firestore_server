@@ -12,7 +12,7 @@ jobs:
     container:
       image:  google/dart:2.12-dev
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Check for no lint Errors and no TODO comments
       run: ./scripts/check_for_lint_errors_and_TODO_comments.sh
 
@@ -21,7 +21,7 @@ jobs:
     container:
       image:  google/dart:2.12-dev
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Check that code is formatted
       run: ./scripts/check_code_is_formatted.sh
 
@@ -30,7 +30,7 @@ jobs:
     container:
       image:  google/dart:2.12-dev
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Run all tests that contact the remote Firestore database.
       env:
         FIRESTORE_CREDENTIALS: ${{ secrets.FIRESTORE_CREDENTIALS }}
@@ -45,7 +45,7 @@ jobs:
   #   container:
   #     image:  google/dart:2.12-dev
   #   steps:
-  #   - uses: actions/checkout@v2
+  #   - uses: actions/checkout@v3
   #   - name: Run tests
   #     env:
   #       FIRESTORE_CREDENTIALS: ${{ secrets.FIRESTORE_CREDENTIALS }}
