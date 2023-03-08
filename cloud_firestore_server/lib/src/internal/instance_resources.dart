@@ -1,7 +1,5 @@
 import 'package:cloud_firestore_server/src/credentials/credentials.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:googleapis_auth/auth.dart' as googleapis_auth;
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis_auth/auth_io.dart' as googleapis_auth;
@@ -30,13 +28,14 @@ Future<InstanceResources> createInstanceResources(
   ServiceAccountCredentials credentials, {
   http.Client? innerClient,
 }) async {
-  final _creds = googleapis_auth.ServiceAccountCredentials(
-      credentials.email,
-      googleapis_auth.ClientId.serviceAccount(credentials.clientId),
-      credentials.privateKey);
+  final creds = googleapis_auth.ServiceAccountCredentials(
+    credentials.email,
+    googleapis_auth.ClientId.serviceAccount(credentials.clientId),
+    credentials.privateKey,
+  );
 
   final client = await googleapis_auth.clientViaServiceAccount(
-    _creds,
+    creds,
     [FirestoreApi.DatastoreScope],
     baseClient: innerClient,
   );

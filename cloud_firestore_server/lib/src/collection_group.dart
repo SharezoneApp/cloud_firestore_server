@@ -1,12 +1,13 @@
 import 'package:cloud_firestore_server/src/internal/instance_resources.dart';
 
-import 'query.dart';
-import 'query_partition.dart';
+import 'package:cloud_firestore_server/src/query.dart';
+import 'package:cloud_firestore_server/src/query_partition.dart';
 
 /// A [CollectionGroup] refers to all documents that are contained in a
 /// collection or subcollection with a specific collection ID.
 @Deprecated('Unimplemented')
 class CollectionGroup extends Query {
+  @Deprecated('Unimplemented')
   CollectionGroup(
     InstanceResources instanceResources, {
     required String path,

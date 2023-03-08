@@ -1,9 +1,9 @@
-T? enumFromString<T>(List<T> values, dynamic? json, {T? orElse}) => json != null
+T? enumFromString<T>(List<T> values, dynamic json, {T? orElse}) => json != null
     ? values.firstWhere(
         (it) =>
-            '$it'.split(".")[1].toString().toLowerCase() ==
-            json.toString().toLowerCase(),
-        orElse: orElse != null ? () => orElse : null)
+            '$it'.split(".")[1].toLowerCase() == json.toString().toLowerCase(),
+        orElse: orElse != null ? () => orElse : null,
+      )
     : orElse;
 
 String enumToString<T>(T value) => value.toString().split('.')[1];

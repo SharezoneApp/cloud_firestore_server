@@ -1,5 +1,5 @@
-import 'document_reference.dart';
-import 'timestamp.dart';
+import 'package:cloud_firestore_server/src/document_reference.dart';
+import 'package:cloud_firestore_server/src/timestamp.dart';
 
 class DocumentSnapshot {
   DocumentSnapshot.existing(
@@ -7,7 +7,7 @@ class DocumentSnapshot {
     this._data, {
     required this.readTime,
     required Timestamp updateTime,
-  })   : exists = true,
+  })  : exists = true,
         // With this.updateTime one could pass null which is not allowed for
         // existing documents.
         // ignore: prefer_initializing_formals

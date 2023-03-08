@@ -1,7 +1,6 @@
+import 'package:cloud_firestore_server/src/internal/internal.dart';
 import 'package:collection/collection.dart';
 import 'package:quiver/core.dart';
-
-import 'internal/internal.dart';
 
 String _reserved = "Paths must not contain '~', '*', '/', '[', or ']'.";
 
@@ -16,8 +15,10 @@ class FieldPath {
   /// Creates a new [FieldPath].
   FieldPath(this.components)
       : assert(components.isNotEmpty),
-        assert(components.where((component) => component.isEmpty).isEmpty,
-            "Expected all FieldPath components to be non-null or non-empty strings.");
+        assert(
+          components.where((component) => component.isEmpty).isEmpty,
+          "Expected all FieldPath components to be non-null or non-empty strings.",
+        );
 
   /// Returns a special sentinel `FieldPath` to refer to the ID of a document.
   ///

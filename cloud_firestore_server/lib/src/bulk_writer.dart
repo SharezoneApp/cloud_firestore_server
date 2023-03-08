@@ -31,21 +31,29 @@ class BulkWriterOptions {
   }) : throttlingEnabled = true {
     if (initialOpsPerSecond.isNegative) {
       throw ArgumentError.value(
-          initialOpsPerSecond, 'initialOpsPerSecond', "can't be negative");
+        initialOpsPerSecond,
+        'initialOpsPerSecond',
+        "can't be negative",
+      );
     }
     if (maxOpsPerSecond != null) {
       if (maxOpsPerSecond!.isNegative) {
         throw ArgumentError.value(
-            maxOpsPerSecond, 'maxOpsPerSecond', "can't be negative");
+          maxOpsPerSecond,
+          'maxOpsPerSecond',
+          "can't be negative",
+        );
       }
       if (initialOpsPerSecond > maxOpsPerSecond!) {
         throw ArgumentError(
-            "initialOpsPerSecond ($initialOpsPerSecond) can't be higher than maxOpsPerSecond ($maxOpsPerSecond)");
+          "initialOpsPerSecond ($initialOpsPerSecond) can't be higher than maxOpsPerSecond ($maxOpsPerSecond)",
+        );
       }
     }
   }
 }
 
 @Deprecated(
-    'Unimplemented - There neeeds to be some discussion how a good native Dart Api would look like.')
+  'Unimplemented - There neeeds to be some discussion how a good native Dart Api would look like.',
+)
 class BulkWriter {}

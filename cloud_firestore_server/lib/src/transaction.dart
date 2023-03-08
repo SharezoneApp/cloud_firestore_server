@@ -1,8 +1,8 @@
-import 'document_reference.dart';
-import 'document_snapshot.dart';
-import 'precondition.dart';
-import 'query.dart';
-import 'query_snapshot.dart';
+import 'package:cloud_firestore_server/src/document_reference.dart';
+import 'package:cloud_firestore_server/src/document_snapshot.dart';
+import 'package:cloud_firestore_server/src/precondition.dart';
+import 'package:cloud_firestore_server/src/query.dart';
+import 'package:cloud_firestore_server/src/query_snapshot.dart';
 
 /// A reference to a transaction.
 ///
@@ -82,7 +82,9 @@ class Transaction {
   /// ```
   @Deprecated('Unimplemented')
   Transaction create(
-      DocumentReference documentReference, Map<String, dynamic> data) {
+    DocumentReference documentReference,
+    Map<String, dynamic> data,
+  ) {
     throw UnimplementedError();
   }
 
@@ -132,7 +134,9 @@ class Transaction {
   /// ```
   @Deprecated('Unimplemented')
   Transaction update(
-      DocumentReference documentReference, Map<String, dynamic> data) {
+    DocumentReference documentReference,
+    Map<String, dynamic> data,
+  ) {
     throw UnimplementedError();
   }
 
@@ -153,8 +157,10 @@ class Transaction {
   /// });
   /// ```
   @Deprecated('Unimplemented')
-  Transaction delete(DocumentReference documentReference,
-      {Precondition? precondition}) {
+  Transaction delete(
+    DocumentReference documentReference, {
+    Precondition? precondition,
+  }) {
     throw UnimplementedError();
   }
 }

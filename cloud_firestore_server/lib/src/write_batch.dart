@@ -1,5 +1,5 @@
-import 'document_reference.dart';
-import 'precondition.dart';
+import 'package:cloud_firestore_server/src/document_reference.dart';
+import 'package:cloud_firestore_server/src/precondition.dart';
 
 /// A Firestore [WriteBatch] that can be used to atomically commit multiple
 /// write operations at once.
@@ -49,8 +49,10 @@ class WriteBatch {
   /// print('Successfully executed batch.');
   /// ```
   @Deprecated('Unimplemented')
-  WriteBatch delete(DocumentReference documentRef,
-      {Precondition? precondition}) {
+  WriteBatch delete(
+    DocumentReference documentRef, {
+    Precondition? precondition,
+  }) {
     throw UnimplementedError();
   }
 

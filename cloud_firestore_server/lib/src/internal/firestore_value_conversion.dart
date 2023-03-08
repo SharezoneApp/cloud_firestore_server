@@ -1,6 +1,6 @@
+import 'package:cloud_firestore_server/src/internal/internal.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart';
-import 'internal.dart';
 
 extension MapToFirestoreMap on Map<String, dynamic> {
   Map<String, Value> toFirestoreMap() {
@@ -15,6 +15,7 @@ extension MapToFirestoreMap on Map<String, dynamic> {
 extension ToFirestoreValueList<T> on Iterable<T> {
   Value toFirestoreValue() {
     final arrVal = ArrayValue()
+      // ignore: avoid_dynamic_calls
       ..values = map<Value>((e) => (e as dynamic).toFirestoreValue() as Value)
           .toList();
     return Value()..arrayValue = arrVal;

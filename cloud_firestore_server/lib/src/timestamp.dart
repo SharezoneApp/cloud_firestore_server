@@ -28,14 +28,14 @@ class Timestamp implements Comparable<Timestamp> {
 
   /// Create a [Timestamp] fromMillisecondsSinceEpoch
   factory Timestamp.fromMillisecondsSinceEpoch(int milliseconds) {
-    final int seconds = (milliseconds ~/ _kThousand).floor();
+    final int seconds = milliseconds ~/ _kThousand;
     final int nanoseconds = (milliseconds - seconds * _kThousand) * _kMillion;
     return Timestamp(seconds, nanoseconds);
   }
 
   /// Create a [Timestamp] fromMicrosecondsSinceEpoch
   factory Timestamp.fromMicrosecondsSinceEpoch(int microseconds) {
-    final int seconds = (microseconds ~/ _kMillion).floor();
+    final int seconds = microseconds ~/ _kMillion;
     final int nanoseconds = (microseconds - seconds * _kMillion) * _kThousand;
     return Timestamp(seconds, nanoseconds);
   }
@@ -48,7 +48,8 @@ class Timestamp implements Comparable<Timestamp> {
   /// Create a [Timestamp] from [DateTime].now()
   factory Timestamp.now() {
     return Timestamp.fromMicrosecondsSinceEpoch(
-        DateTime.now().microsecondsSinceEpoch);
+      DateTime.now().microsecondsSinceEpoch,
+    );
   }
 
   final int _seconds;

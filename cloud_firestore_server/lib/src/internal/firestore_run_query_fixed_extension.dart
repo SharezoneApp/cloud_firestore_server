@@ -32,15 +32,19 @@ extension FirestoreRunQueryFixedExtension
   ///
   /// If the used [http.Client] completes with an error when making a REST call,
   /// this method will complete with the same error.
-  Future<List<Document>> runQueryFixed(RunQueryRequest request,
-      {required http.Client client, required String? parent}) async {
+  Future<List<Document>> runQueryFixed(
+    RunQueryRequest request, {
+    required http.Client client,
+    required String? parent,
+  }) async {
     final urlParentAddition = parent != null ? '/$parent' : '';
     final url =
         'https://firestore.googleapis.com/v1/projects/sharezone-debug/databases/(default)/documents$urlParentAddition:runQuery';
     final body = json.encode(request.toJson());
     final response = await client.post(url, body: body);
     final resBody = response.body;
-    final List<dynamic> decoded = json.decode(resBody) as List;
+    final List<Map<String, dynamic>> decoded =
+        json.decode(resBody) as List<Map<String, dynamic>>;
     if (decoded[0]['error'] != null) {
       throw Exception('Firestore Error: $resBody!');
     }

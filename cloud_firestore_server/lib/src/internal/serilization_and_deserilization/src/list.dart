@@ -21,7 +21,7 @@ typedef ObjectListBuilder<T> = T Function(dynamic decodedMapValue);
 ///   //...
 /// );
 /// ```
-List<T> decodeList<T>(dynamic? data, ObjectListBuilder<T> builder) {
+List<T> decodeList<T>(dynamic data, ObjectListBuilder<T> builder) {
   if (data == null) return [];
   final originaldata = data as List<dynamic>;
   return originaldata.map((dynamic value) => builder(value)).toList();

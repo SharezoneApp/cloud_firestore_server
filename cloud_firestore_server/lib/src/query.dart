@@ -1,9 +1,7 @@
+import 'package:cloud_firestore_server/cloud_firestore_server.dart';
+import 'package:cloud_firestore_server/src/internal/internal.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart' as api;
-import 'package:cloud_firestore_server/cloud_firestore_server.dart';
-import 'internal/internal.dart';
-import 'query_document_snapshot.dart';
-import 'query_snapshot.dart';
 
 enum OrderDirection {
   ascending,
@@ -67,12 +65,15 @@ class Query {
     bool? isNull,
   }) {
     return _copyWith(
-        conditions: List.from(_conditions)
-          ..add(Condition(
+      conditions: List.from(_conditions)
+        ..add(
+          Condition(
             fieldPath: field as String,
             operation: arrayContains != null ? 'ARRAY_CONTAINS' : 'EQUAL',
             value: arrayContains ?? isEqualTo,
-          )));
+          ),
+        ),
+    );
   }
 
   /// Creates and returns a new [Query] that applies a field mask to the result
@@ -120,8 +121,10 @@ class Query {
   /// }
   /// ```
   @Deprecated('Unimplemented')
-  Query orderBy(dynamic fieldPath,
-      {OrderDirection direction = OrderDirection.ascending}) {
+  Query orderBy(
+    dynamic fieldPath, {
+    OrderDirection direction = OrderDirection.ascending,
+  }) {
     throw UnimplementedError();
   }
 
@@ -343,12 +346,14 @@ class Query {
 
   QuerySnapshot _docsToQuerySnapshot(List<api.Document> docs) {
     final queryDocs = docs
-        .map((doc) => QueryDocumentSnapshot(
-              doc.id,
-              doc.fields.toPrimitives(),
-              readTime: Timestamp.now(),
-              updateTime: doc.updateTime.toTimestampOrThrow(),
-            ))
+        .map(
+          (doc) => QueryDocumentSnapshot(
+            doc.id,
+            doc.fields.toPrimitives(),
+            readTime: Timestamp.now(),
+            updateTime: doc.updateTime.toTimestampOrThrow(),
+          ),
+        )
         .toList();
     return QuerySnapshot(queryDocs);
   }

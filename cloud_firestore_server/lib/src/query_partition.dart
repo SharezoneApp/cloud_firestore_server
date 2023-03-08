@@ -1,4 +1,4 @@
-import 'query.dart';
+import 'package:cloud_firestore_server/src/query.dart';
 
 /// A split point that can be used in a query as a starting and/or end point for
 /// the query results. The cursors returned by {@link #startAt} and {@link
@@ -6,7 +6,11 @@ import 'query.dart';
 /// that produced this partition.
 @Deprecated('Unimplemented')
 class QueryPartition {
-  QueryPartition(this.startAt, this.endBefore);
+  @Deprecated('Unimplemented')
+  QueryPartition(
+    @Deprecated('Unimplemented') this.startAt,
+    @Deprecated('Unimplemented') this.endBefore,
+  );
 
   /// The cursor that defines the first result for this partition or `null`
   /// if this is the first partition. The cursor value must be
