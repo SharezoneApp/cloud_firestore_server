@@ -15,13 +15,13 @@ import 'package:test/test.dart';
 /// Locally the remote tests can be skipped via
 /// `dart --no-sound-null-safety test --exclude-tags remote`.
 ServiceAccountCredentials getCredentialsFromEnvironment() {
-  final _creds = Platform.environment['FIRESTORE_CREDENTIALS'];
-  if (_creds == null) {
+  final creds = Platform.environment['FIRESTORE_CREDENTIALS'];
+  if (creds == null) {
     throw ArgumentError(
         'The environment variable "FIRESTORE_CREDENTIALS" does not have the firestore service account credentials. This environment variable is usually provided via Github Secrets.\n'
         'If you develop locally you should run only the tests that dont need the credentials. You can do this by running "dart --no-sound-null-safety test --exclude-tags remote".');
   }
-  return ServiceAccountCredentials.fromJson(_creds);
+  return ServiceAccountCredentials.fromJson(creds);
 }
 
 Future<void> main() async {
@@ -31,18 +31,18 @@ Future<void> main() async {
     runTests((innerClient) => Firestore.internal(
           url: 'http://localhost:8080/',
           innerClient: innerClient,
-        ));
-  }, tags: 'emulator');
+        ),);
+  }, tags: 'emulator',);
   group('(using remote Firestore)', () {
     runTests((innerClient) => Firestore.newInstance(
           credentials: getCredentialsFromEnvironment(),
           innerClient: innerClient,
-        ));
-  }, tags: 'remote');
+        ),);
+  }, tags: 'remote',);
 }
 
 void runTests(
-    Future<Firestore> Function(SpyingClient innerClient) setupFirestore) {
+    Future<Firestore> Function(SpyingClient innerClient) setupFirestore,) {
   group('innerClient', () {
     late Firestore firestore;
     late SpyingClient innerClient;

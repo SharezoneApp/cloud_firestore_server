@@ -1,9 +1,9 @@
+import 'package:cloud_firestore_server/src/internal/firestore_run_query_fixed_extension.dart';
+import 'package:cloud_firestore_server/src/internal/firestore_value_conversion.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
-import 'firestore_run_query_fixed_extension.dart';
-import 'firestore_value_conversion.dart';
 
 Future<List<Document>> runQuery({
   required String fieldPath,
@@ -31,7 +31,7 @@ Future<List<Document>> runQuery({
   final runQueryRequest = RunQueryRequest()..structuredQuery = structuredQuery;
 
   final documents = await api.runQueryFixed(runQueryRequest,
-      client: client, parent: parentPath);
+      client: client, parent: parentPath,);
   return documents;
 }
 
@@ -63,7 +63,7 @@ Future<List<Document>> runMultiConditionQuery({
   final runQueryRequest = RunQueryRequest()..structuredQuery = structuredQuery;
 
   final documents = await api.runQueryFixed(runQueryRequest,
-      client: client, parent: parentPath);
+      client: client, parent: parentPath,);
   return documents;
 }
 

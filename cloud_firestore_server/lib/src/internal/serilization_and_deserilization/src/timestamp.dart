@@ -1,6 +1,6 @@
 import 'package:cloud_firestore_server/cloud_firestore_server.dart';
 
-import 'datetime.dart';
+import 'package:cloud_firestore_server/src/internal/serilization_and_deserilization/src/datetime.dart';
 
 extension StringToTimestamp on String {
   Timestamp toTimestampOrThrow() => _toTimestamp(this);

@@ -1,5 +1,5 @@
-import 'document_reference.dart';
-import 'timestamp.dart';
+import 'package:cloud_firestore_server/src/document_reference.dart';
+import 'package:cloud_firestore_server/src/timestamp.dart';
 
 class DocumentSnapshot {
   DocumentSnapshot.existing(

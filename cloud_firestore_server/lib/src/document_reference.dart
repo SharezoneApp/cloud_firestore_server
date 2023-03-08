@@ -1,12 +1,9 @@
+import 'package:cloud_firestore_server/cloud_firestore_server.dart';
+import 'package:cloud_firestore_server/src/internal/internal.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:googleapis/firestore/v1.dart' as api;
-import 'package:cloud_firestore_server/cloud_firestore_server.dart';
 import 'package:meta/meta.dart';
 import 'package:quiver/core.dart';
-
-import 'collection_reference.dart';
-import 'document_snapshot.dart';
-import 'internal/internal.dart';
 
 /// A DocumentReference refers to a document location in a Firestore database
 /// and can be used to write, read, or listen to the location.
@@ -77,12 +74,18 @@ class DocumentReference {
   /// print(subcollection.path);
   /// ```
   CollectionReference collection(String collectionPath) {
-    assert(collectionPath.isNotEmpty,
-        "a collectionPath path must be a non-empty string");
-    assert(!collectionPath.contains("//"),
-        "a collection path must not contain '//'");
-    assert(isValidCollectionPath(collectionPath),
-        "a collection path must point to a valid collection.");
+    assert(
+      collectionPath.isNotEmpty,
+      "a collectionPath path must be a non-empty string",
+    );
+    assert(
+      !collectionPath.contains("//"),
+      "a collection path must not contain '//'",
+    );
+    assert(
+      isValidCollectionPath(collectionPath),
+      "a collection path must point to a valid collection.",
+    );
     return CollectionReference(
       _instanceResources,
       path: Pointer(_path).collectionPath(collectionPath),
@@ -169,9 +172,12 @@ class DocumentReference {
       }
       rethrow;
     }
-    return DocumentSnapshot.existing(doc.id, doc.fields.toPrimitives(),
-        readTime: Timestamp.now(),
-        updateTime: doc.updateTime.toTimestampOrThrow());
+    return DocumentSnapshot.existing(
+      doc.id,
+      doc.fields.toPrimitives(),
+      readTime: Timestamp.now(),
+      updateTime: doc.updateTime.toTimestampOrThrow(),
+    );
   }
 
   /// Writes to the document referred to by this DocumentReference. If the
@@ -264,7 +270,8 @@ class DocumentReference {
       // We are in the same package why does the linter complain?!
       // ignore: invalid_use_of_internal_member
       throw FirebaseException(
-        code: e.jsonResponse?['error']?['status'] as String?,
+        code: (e.jsonResponse?['error'] as Map<String, dynamic>?)?['status']
+            as String?,
         message: e.message,
       );
     }

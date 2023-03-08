@@ -1,4 +1,4 @@
-import 'pointer.dart';
+import 'package:cloud_firestore_server/src/internal/pointer.dart';
 
 /// Helper method exposed to determine whether a given [collectionPath] points to
 /// a valid Firestore collection.

@@ -1,10 +1,7 @@
 import 'package:cloud_firestore_server/cloud_firestore_server.dart';
+import 'package:cloud_firestore_server/src/internal/instance_resources.dart';
+import 'package:cloud_firestore_server/src/internal/pointer.dart';
 import 'package:quiver/core.dart';
-
-import 'document_reference.dart';
-import 'internal/instance_resources.dart';
-import 'internal/pointer.dart';
-import 'query.dart';
 
 /// A CollectionReference object can be used for adding documents, getting
 /// document references, and querying for documents (using the methods
@@ -69,8 +66,8 @@ class CollectionReference extends Query {
     if (documentPath == null) {
       throw UnimplementedError('Automatic ID generation not implemented');
     }
-    final _documentPath = Pointer(path).documentPath(documentPath);
-    return DocumentReference(_instanceResources, path: _documentPath);
+    final documentPath0 = Pointer(path).documentPath(documentPath);
+    return DocumentReference(_instanceResources, path: documentPath0);
   }
 
   /// Retrieves the list of documents in this collection.

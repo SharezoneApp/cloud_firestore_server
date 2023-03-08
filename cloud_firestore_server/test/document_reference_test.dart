@@ -29,6 +29,7 @@ Future<void> main() async {
       // Act
       try {
         await docRef.delete(precondition: Precondition(exists: true));
+        // ignore: use_test_throws_matchers
         fail('Should throw');
       } catch (e) {
         final exception = e as FirebaseException;
@@ -44,7 +45,8 @@ Future<void> main() async {
 
         // Act
         final exec = () => docRef.delete(
-            precondition: Precondition(lastUpdateTime: Timestamp.now()));
+              precondition: Precondition(lastUpdateTime: Timestamp.now()),
+            );
 
         // Assert
         expect(exec, throwsA(isA<Exception>()));
@@ -63,7 +65,8 @@ Future<void> main() async {
 
         // Act
         await docRef.delete(
-            precondition: Precondition(lastUpdateTime: updateTime));
+          precondition: Precondition(lastUpdateTime: updateTime),
+        );
 
         // Assert
         final deletedDoc = await docRef.get();

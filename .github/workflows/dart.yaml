@@ -6,31 +6,37 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  DART_VERSION: 2.19.3
+
 jobs:
   check-no-lints-and-todos:
     runs-on: ubuntu-latest
-    container:
-      image:  google/dart:2.12-dev
     steps:
     - uses: actions/checkout@v2
+    - uses: dart-lang/setup-dart@v1
+      with:
+        sdk: ${{ env.DART_VERSION }}
     - name: Check for no lint Errors and no TODO comments
       run: ./scripts/check_for_lint_errors_and_TODO_comments.sh
 
   is-formatted:
     runs-on: ubuntu-latest
-    container:
-      image:  google/dart:2.12-dev
     steps:
     - uses: actions/checkout@v2
+    - uses: dart-lang/setup-dart@v1
+      with:
+        sdk: ${{ env.DART_VERSION }}
     - name: Check that code is formatted
       run: ./scripts/check_code_is_formatted.sh
 
   run-remote-tests:
     runs-on: ubuntu-latest
-    container:
-      image:  google/dart:2.12-dev
     steps:
     - uses: actions/checkout@v2
+    - uses: dart-lang/setup-dart@v1
+      with:
+        sdk: ${{ env.DART_VERSION }}
     - name: Run all tests that contact the remote Firestore database.
       env:
         FIRESTORE_CREDENTIALS: ${{ secrets.FIRESTORE_CREDENTIALS }}

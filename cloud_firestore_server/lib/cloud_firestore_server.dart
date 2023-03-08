@@ -1,24 +1,22 @@
+import 'package:cloud_firestore_server/src/bulk_writer.dart';
+import 'package:cloud_firestore_server/src/collection_group.dart';
+import 'package:cloud_firestore_server/src/collection_reference.dart';
+import 'package:cloud_firestore_server/src/credentials/credentials.dart';
+import 'package:cloud_firestore_server/src/document_reference.dart';
 import 'package:cloud_firestore_server/src/document_snapshot.dart';
-import 'package:meta/meta.dart';
+import 'package:cloud_firestore_server/src/internal/instance_resources.dart';
+import 'package:cloud_firestore_server/src/internal/path_string_validation.dart';
+import 'package:cloud_firestore_server/src/transaction.dart';
+import 'package:cloud_firestore_server/src/write_batch.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
-
-import 'src/bulk_writer.dart';
-import 'src/collection_group.dart';
-import 'src/collection_reference.dart';
-import 'src/credentials/credentials.dart';
-import 'src/document_reference.dart';
-import 'src/internal/instance_resources.dart';
-import 'src/internal/path_string_validation.dart';
-import 'src/transaction.dart';
-import 'src/write_batch.dart';
+import 'package:meta/meta.dart';
 
 export 'src/collection_group.dart';
 export 'src/collection_reference.dart';
 export 'src/credentials/credentials.dart';
 export 'src/document_reference.dart';
 export 'src/document_snapshot.dart';
-export 'src/field_path.dart';
 export 'src/field_path.dart';
 export 'src/firebase_exception.dart';
 export 'src/precondition.dart';
@@ -47,13 +45,15 @@ class Firestore {
     http.Client? innerClient,
   }) async {
     /// Haven't tested [ServiceAccountCredentials.applicationDefault] yet.
-    final _credentials =
+    final credentials0 =
         credentials ?? ServiceAccountCredentials.applicationDefault();
 
-    return Firestore._(await createInstanceResources(
-      _credentials,
-      innerClient: innerClient,
-    ));
+    return Firestore._(
+      await createInstanceResources(
+        credentials0,
+        innerClient: innerClient,
+      ),
+    );
   }
 
   @visibleForTesting
@@ -61,8 +61,12 @@ class Firestore {
     String url = 'https://firestore.googleapis.com/',
     http.Client? innerClient,
   }) async {
-    return Firestore._(await createTestInstanceResources(
-        rootUrl: url, innerClient: innerClient));
+    return Firestore._(
+      await createTestInstanceResources(
+        rootUrl: url,
+        innerClient: innerClient,
+      ),
+    );
   }
 
   Firestore._(this._instanceResources);
@@ -80,12 +84,18 @@ class Firestore {
   /// print('Added document at ${documentRef.path}');
   /// ```
   CollectionReference collection(String collectionPath) {
-    assert(collectionPath.isNotEmpty,
-        "a collectionPath path must be a non-empty string");
-    assert(!collectionPath.contains("//"),
-        "a collection path must not contain '//'");
-    assert(isValidCollectionPath(collectionPath),
-        "a collection path must point to a valid collection.");
+    assert(
+      collectionPath.isNotEmpty,
+      "a collectionPath path must be a non-empty string",
+    );
+    assert(
+      !collectionPath.contains("//"),
+      "a collection path must not contain '//'",
+    );
+    assert(
+      isValidCollectionPath(collectionPath),
+      "a collection path must point to a valid collection.",
+    );
     return CollectionReference(
       _instanceResources,
       path: collectionPath,
@@ -103,11 +113,17 @@ class Firestore {
   /// ```
   DocumentReference doc(String documentPath) {
     assert(
-        documentPath.isNotEmpty, "a document path must be a non-empty string");
+      documentPath.isNotEmpty,
+      "a document path must be a non-empty string",
+    );
     assert(
-        !documentPath.contains("//"), "a document path must not contain '//'");
+      !documentPath.contains("//"),
+      "a document path must not contain '//'",
+    );
     assert(
-        documentPath != '/', "a document path must point to a valid document");
+      documentPath != '/',
+      "a document path must point to a valid document",
+    );
     return DocumentReference(_instanceResources, path: documentPath);
   }
 

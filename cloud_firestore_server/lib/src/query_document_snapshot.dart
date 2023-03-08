@@ -1,5 +1,5 @@
-import 'document_snapshot.dart';
-import 'timestamp.dart';
+import 'package:cloud_firestore_server/src/document_snapshot.dart';
+import 'package:cloud_firestore_server/src/timestamp.dart';
 
 class QueryDocumentSnapshot extends DocumentSnapshot {
   QueryDocumentSnapshot(
